@@ -1,0 +1,34 @@
+{
+  "name": "nodejs_blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --inspect index.js start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quandev99/nodejs_blog.git"
+  },
+  "keywords": [
+    "f8",
+    "f8",
+    "blog",
+    "nodejs",
+    "f8",
+    "nodejs"
+  ],
+  "author": "quandev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/quandev99/nodejs_blog/issues"
+  },
+  "homepage": "https://github.com/quandev99/nodejs_blog#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
