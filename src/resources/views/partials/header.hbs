@@ -1,50 +1,57 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">F8 Blog</a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <div class="container">
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home
-          <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      {{! <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li> }}
-    </ul>
-    {{! <form class="form-inline my-2 my-lg-0">
+    <a class="navbar-brand" href="/">
+
+      F8 Blog</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <img
+              src="https://fullstack.edu.vn/static/media/f8-icon.18cd71cfcfa33566a22b.png"
+              alt="icon"
+              class="user-avatar"
+              style=" width: 50px;
+              height: 50px;
+              border-radius: 50px;
+              margin-right: 10px;"
+            />
+            <span class="namelogin">Quandev99</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/courses/create">Đăng Khóa Học</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/me/stored/courses">Khóa Học Của Tôi</a>
+            <a class="dropdown-item" href="/me/stored/news">Bài Viết Của Tôi</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Đăng Xuất</a>
+            <a class="dropdown-item" href="/auth/viewLogin">Đăng Nhập</a>
+
+          </div>
+        </li>
+      </ul>
+      {{! <form class="form-inline my-2 my-lg-0">
       <input
         class="form-control mr-sm-2"
         type="search"
@@ -56,5 +63,12 @@
         type="submit"
       >Search</button>
     </form> }}
+    </div>
   </div>
 </nav>
+
+<script>
+  const user = JSON.parse(localStorage.getItem("user")); console.log(user);
+  const namelogin = document.querySelector(".nameLogin"); if(user?.userName) {
+  namelogin.textContent = user.userName }
+</script>

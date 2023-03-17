@@ -1,1 +1,38 @@
-<h1>Home Page</h1>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Document</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  </head>
+  <body>
+    <div class="mt-4">
+      <div class="row">
+        {{#each courses}}
+          <div class="col-sm">
+            <div class="card">
+              <a href="/courses/{{this.slug}}">
+                <img
+                  class="card-img-top"
+                  src="{{this.image}}"
+                  alt="{{this.image}}"
+                />
+              </a>
+              <div class="card-body">
+                <a href="/courses/{{this.slug}}">
+                  <h5 class="card-title">{{this.name}}</h5>
+                </a>
+                <p class="card-text">{{this.description}}</p>
+                <a href="#" class="btn btn-primary">Mua Khóa Học</a>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </body>
+</html>
