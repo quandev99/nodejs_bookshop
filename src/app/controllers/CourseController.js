@@ -1,4 +1,8 @@
 const Course = require("../models/Course");
+const slugify = require("slugify");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const slug = require("mongoose-slug-generator");
 
 const {
   mutipleMongooseToObject,
@@ -47,10 +51,33 @@ class CourseController {
 
   //[Get] /courses/:id/
   update(req, res, next) {
-    Course.updateOne({ _id: req.params.id }, req.body)
-      .then(() => res.redirect("/me/stored/courses"))
-      .catch(next);
+    // Course.updateOne({ _id: req.params.id }, req.body)
+    //   .then(() => res.redirect("/me/stored/courses"))
+    //   .catch(next);
+    Course.findByIdAndUpdate(
+      { _id: req.params.id },
+      { name: req.body.name },
+      { new: true }
+    )
+      .then((updatedCourse) => {
+        updatedCourse.slug = slugify(updatedCourse.name, { lower: true });
+        updatedCourse.save();
+        res.redirect("/me/stored/courses");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // (err, updatedCourse) => {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     updatedCourse.slug = slugify(updatedCourse.name, { lower: true });
+    //     updatedCourse.save();
+    //     res.redirect("/me/stored/courses");
+    //   }
+    // }
   }
+
   //[Delete] /courses/:id/
   delete(req, res, next) {
     Course.delete({ _id: req.params.id })
@@ -87,4 +114,8 @@ class CourseController {
     }
   }
 }
+
+// Add plugins
+mongoose.plugin(slug);
+
 module.exports = new CourseController();

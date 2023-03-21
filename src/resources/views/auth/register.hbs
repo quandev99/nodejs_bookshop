@@ -52,46 +52,62 @@
   <!--Bắt Đầu Phần Nội Dung-->
   <div class="noi-dung">
     <div class="form">
-      <h2>Trang Đăng Nhập</h2>
-      <form method="post" id="form-login" action="/auth/login">
+      <h2>Trang Đăng Kí Tài Khoản</h2>
+      <form method="post" id="form-register" action="/auth/register">
         <div class="input-form">
           <span>Tên Người Dùng</span>
-          <input type="text" class="username" name="userName" />
+          <input type="text" class="fullName" name="fullName" />
+        </div>
+        <div class="input-form">
+          <span>Hình Ảnh</span>
+          <input type="text" class="avatar" name="avatar" />
+        </div>
+        <div class="input-form">
+          <span>Tên Tài khoản</span>
+          <input type="text" class="userName" name="userName" />
         </div>
         <div class="input-form">
           <span>Mật Khẩu</span>
           <input type="password" class="password" name="password" />
         </div>
-        <div class="nho-dang-nhap">
-          <label><input type="checkbox" name="" /> Nhớ Đăng Nhập</label>
+        <div class="input-form">
+          <span>Email</span>
+          <input type="text" class="email" name="email" />
         </div>
         <div class="input-form">
-          <button type="submit" class="loginBtn">Login</button>
+          <button type="submit" class="/viewRegister">Đăng kí</button>
         </div>
         <div class="input-form">
-          <p>Bạn Chưa Có Tài Khoản? <a href="/auth/viewRegister">Đăng Ký</a></p>
+          <p>Bạn đã Có Tài Khoản? <a href="/auth/viewLogin">Đăng nhập</a></p>
         </div>
       </form>
-      <h3>Đăng Nhập Bằng Mạng Xã Hội</h3>
-      <ul class="icon-dang-nhap">
-        <li><i class="fa fa-facebook" aria-hidden="true"></i></li>
-        <li><i class="fa fa-google" aria-hidden="true"></i></li>
-        <li><i class="fa fa-twitter" aria-hidden="true"></i></li>
-      </ul>
     </div>
   </div>
   <!--Kết Thúc Phần Nội Dung-->
-</section>
 <script>
-  const loginForm = document.querySelector("#form-login");
-  loginForm.addEventListener("submit", async (event) => {
-  event.preventDefault(); const username =
-  document.querySelector(".username").value; const password =
-  document.querySelector(".password").value; const response = await
-  fetch("http://localhost:5000/auth/login", { method: "POST", headers: {
-  "Content-Type": "application/json" }, body: JSON.stringify({ password:
-  password, userName: username }), }); const data = await response.json(); if
-  (data.user) { localStorage.setItem("user", JSON.stringify(data.user));
-  alert(data.message); location.href = "/"; } else { alert(data.message); } });
+  const registerForm = document.querySelector("#form-register");
+registerForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const fullName = document.querySelector(".fullName").value;
+  const avatar = document.querySelector(".avatar").value;
+  const email = document.querySelector(".email").value;
+  const userName = document.querySelector(".userName").value;
+  const password = document.querySelector(".password").value;
+  console.log(registerForm);
+  const response = await fetch("http://localhost:5000/auth/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ fullName : fullName ,password : password ,avatar : avatar ,userName : userName ,email : email ,}),
+  });
+
+  const data = await response.json();
+  if (data.user) {
+    alert(data.message);
+    location.href = "/auth/viewLogin";
+  } else {
+    alert(data.message);
+  }
+});
 </script>
-{{! || data.user.role ===1 }}

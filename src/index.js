@@ -6,6 +6,7 @@ var methodOverride = require("method-override");
 const { extname } = require("path");
 const app = express();
 const port = 5000;
+// const SortMiddleware = require("./app/middlewares/SortMiddleware");
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -17,6 +18,9 @@ app.use(
 app.use(express.json());
 
 app.use(methodOverride("_method"));
+
+//Custom middleware
+// app.use(SortMiddleware);
 
 const route = require("./routes");
 
