@@ -5,7 +5,7 @@ const morgan = require("morgan");
 var methodOverride = require("method-override");
 const { extname } = require("path");
 const app = express();
-const port = 5000;
+const port = 1999;
 // const SortMiddleware = require("./app/middlewares/SortMiddleware");
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -42,6 +42,7 @@ app.engine(
 );
 app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "resources", "views"));
+app.set("admin", path.join(__dirname, "resources", "views/admin/views"));
 
 // Route init
 route(app);

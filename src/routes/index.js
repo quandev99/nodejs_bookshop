@@ -1,15 +1,18 @@
 const newsRoute = require("./news");
 const meRoute = require("./me");
 const siteRoute = require("./site");
-const coursesRoute = require("./courses");
+const productsRoute = require("./products");
 const authRouter = require("./auth");
+const adminRoute = require("./admin");
 
 function route(app) {
   // app.post("/register", authRouter);
-  app.use("/auth", authRouter);
+  app.use("/admin/auth", authRouter);
+  app.use("/admin/me", authRouter);
+  app.use("/admin/me", meRoute);
+  app.use("/admin/products", productsRoute);
   app.use("/news", newsRoute);
-  app.use("/me", meRoute);
-  app.use("/courses", coursesRoute);
+  app.use("/admin", adminRoute);
   app.use("/", siteRoute);
 }
 

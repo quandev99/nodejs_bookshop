@@ -1,0 +1,48 @@
+<div class="mt-4 container">
+  <h3>Đăng sản phẩm</h3>
+  <form method="post" action="/admin/products/store">
+    <div class="form-group">
+      <label for="name">Tên sản phẩm</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        placeholder="Enter name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="image">Hình ảnh sản phẩm</label>
+      <input
+        type="text"
+        class="form-control"
+        id="image"
+        name="image"
+        placeholder="Enter image"
+      />
+    </div>
+    <div class="form-group">
+      <label for="description">Mô tả sản phẩm</label>
+      <input
+        type="text"
+        class="form-control"
+        id="description"
+        name="description"
+        placeholder="Enter description"
+      />
+    </div>
+    <div class="form-group">
+      <label for="price">Giá</label>
+      <input
+        type="text"
+        class="form-control"
+        id="price"
+        name="price"
+        placeholder="Enter price"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+    <button type="reset" class="btn btn-primary">Reset sản phẩm</button>
+  </form>
+</div>

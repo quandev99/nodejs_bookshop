@@ -1,4 +1,4 @@
-<section class="mt-5">
+<section class="container mt-5">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Roboto",
     sans-serif; } section { position: relative; width: 100%; height: 100vh;
@@ -88,7 +88,7 @@
   event.preventDefault(); const username =
   document.querySelector(".username").value; const password =
   document.querySelector(".password").value; const response = await
-  fetch("http://localhost:5000/auth/login", { method: "POST", headers: {
+  fetch("http://localhost:1999/admin/auth/login", { method: "POST", headers: {
   "Content-Type": "application/json" }, body: JSON.stringify({ password:
   password, userName: username }), }); const data = await response.json(); if
   (data.user) { localStorage.setItem("user", JSON.stringify(data.user));

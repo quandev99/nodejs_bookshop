@@ -5,5 +5,11 @@
   border-radius: 50px;
   margin-right: 10px;
 }
-
-// @import "login";
+.text-truncate {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-height: 2.4em;
+  line-height: 1.2em;
+}

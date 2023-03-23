@@ -3,6 +3,11 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+const {
+  mutipleMongooseToObject,
+  mutipleToObject,
+} = require("../../until/mongoose");
+
 class AuthController {
   //Post /register
   register(req, res, next) {
@@ -48,7 +53,17 @@ class AuthController {
   }
 
   viewLogin(req, res, next) {
-    res.render("auth/loginUser");
+    res.render("admin/auth/loginUser");
+  }
+
+  listUser(req, res, next) {
+    Auth.find({})
+      .then((users) => {
+        res.render("admin/me/list-users", {
+          users: mutipleMongooseToObject(users),
+        });
+      })
+      .catch(next);
   }
 
   // POST /login

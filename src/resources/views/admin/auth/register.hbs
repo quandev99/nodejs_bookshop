@@ -94,7 +94,7 @@ registerForm.addEventListener("submit", async (event) => {
   const userName = document.querySelector(".userName").value;
   const password = document.querySelector(".password").value;
   console.log(registerForm);
-  const response = await fetch("http://localhost:5000/auth/register", {
+  const response = await fetch("http://localhost:1999/admin/auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

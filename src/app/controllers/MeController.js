@@ -1,47 +1,35 @@
-const Course = require("../models/Course");
+const Product = require("../models/Product");
 const {
   mutipleMongooseToObject,
   mutipleToObject,
 } = require("../../until/mongoose");
 class MeController {
-  //Get /me/stored/courses
-  storedCourses(req, res, next) {
-    let courseQuery = Course.find({});
+  //Get /me/stored/products
+  storedProducts(req, res, next) {
+    let productQuery = Product.find({});
     if (req.query.hasOwnProperty("_sort")) {
-      courseQuery = courseQuery.sort({
+      productQuery = productQuery.sort({
         // [req.query.column]: req.query.type,
         name: "asc",
       });
       return;
     }
-    Promise.all([courseQuery, Course.countDocumentsDeleted()])
-      .then(([courses, deletedCourse]) => {
-        res.render("me/stored-courses", {
-          deletedCourse: deletedCourse,
-          courses: mutipleMongooseToObject(courses),
+    Promise.all([productQuery, Product.countDocumentsDeleted()])
+      .then(([products, deletedProduct]) => {
+        res.render("admin/me/stored-products", {
+          deletedProduct: deletedProduct,
+          products: mutipleMongooseToObject(products),
         });
       })
       .catch(next);
-    // Course.countDocumentsDeleted()
-    //   .then((deletedCourse) => {
-    //     console.log(deletedCourse);
-    //   })
-    //   .catch(next);
-    // Course.find({})
-    //   .then((courses) => {
-    //     res.render("me/stored-courses", {
-    //       courses: mutipleMongooseToObject(courses),
-    //     });
-    //   })
-    //   .catch(next);
   }
 
-  //Get /me/trash/courses
-  trashCourses(rep, res, next) {
-    Course.findDeleted({})
-      .then((courses) => {
-        res.render("me/trash-courses", {
-          courses: mutipleMongooseToObject(courses),
+  //Get /me/trash/products
+  trashProducts(rep, res, next) {
+    Product.findDeleted({})
+      .then((products) => {
+        res.render("admin/me/trash-products", {
+          products: mutipleMongooseToObject(products),
         });
       })
       .catch(next);
