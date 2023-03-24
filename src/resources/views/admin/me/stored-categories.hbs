@@ -1,0 +1,52 @@
+<div class="container">
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Sl</th>
+        <th scope="col">Tên Danh Mục
+        </th>
+        <th scope="col" colspan="2">Thời Gian Tạo
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each categories}}
+        <tr>
+          <td>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="productIds[]"
+                value="{{this._id}}"
+              />
+            </div>
+            <th scope="row">{{sum @index 1}}</th>
+          </td>
+          <td>{{this.nameCategory}}</td>
+          <td>{{this.createdAt}}</td>
+          <td>
+            <a
+              href="/admin/categories/{{this._id}}/edit"
+              class="btn btn-link"
+            >Sửa</a>
+            <a
+              href=""
+              data-id="{{this._id}}"
+              class="btn btn-link"
+              data-toggle="modal"
+              data-target="#delete-category-modal"
+            >Xóa</a>
+          </td>
+        </tr>
+      {{else}}
+        <tr>
+          <td colspan="5" class="text-center">Bạn chưa đăng danh mục nào.
+            <a href="/categories/create">Đăng danh mục</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

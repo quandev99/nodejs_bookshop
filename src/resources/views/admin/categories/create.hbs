@@ -1,0 +1,28 @@
+<div class="mt-4 container">
+  <h3>Đăng danh mục</h3>
+  <form id="add-category">
+    <div class="form-group">
+      <label for="name">Tên danh mục</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nameCategory"
+        name="nameCategory"
+        placeholder="Enter Category"
+      />
+    </div>
+    <button type="submit" id="btnAddCategory" class="btn btn-primary">Thêm danh
+      mục</button>
+  </form>
+</div>
+<script type="text/javascript">
+  const loginForm = document.querySelector("#add-category"); const addCategory =
+  document.querySelector('#btnAddCategory');
+  loginForm.addEventListener("submit", async (e) => { e.preventDefault(); const
+  nameCategory = document.querySelector("#nameCategory").value; const response =
+  await fetch("http://localhost:1999/admin/categories/stored", { method: "POST",
+  headers: { "Content-Type": "application/json" }, body: JSON.stringify({
+  nameCategory: nameCategory }), }); const data = await response.json();
+  if(data?.data) { alert(data?.message) }else{ alert(data?.message) };
+  location.href = '/admin/me/stored/categories' });
+</script>

@@ -1,0 +1,34 @@
+<div class="mt-4 container">
+  <h3>Sữa danh mục</h3>
+  <form
+    id="form-login"
+    method="post"
+    action="/admin/categories/{{categories._id}}/update?_method=put"
+  >
+    <div class="form-group">
+      <label for="name">Tên danh mục</label>
+      <input
+        type="text"
+        class="form-control nameCategory"
+        id="nameCategory"
+        name="nameCategory"
+        value="{{categories.nameCategory}}"
+        placeholder="Enter Category"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu lại danh mục</button>
+  </form>
+</div>
+
+<script>
+  /// category const loginForm = document.querySelector("#form-login"); const
+  submitBtn = document.querySelector('.btn-primary');
+  submitBtn.addEventListener("submit", async (event) => {
+  event.preventDefault(); const nameCategory =
+  querySelector(".nameCategory").value; const response = await
+  fetch("/admin/categories/{{categories._id}}/update?_method=put", { method:
+  "POST", headers: { "Content-Type": "application/json" }, body:
+  JSON.stringify({ nameCategory: nameCategory }), }); const data = await
+  response.json(); if(data.Category) { alert(data.message); } else {
+  alert(data.message); } });
+</script>

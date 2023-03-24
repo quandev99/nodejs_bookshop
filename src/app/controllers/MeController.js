@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const Category = require("../models/Category");
 const {
   mutipleMongooseToObject,
   mutipleToObject,
@@ -25,7 +26,7 @@ class MeController {
   }
 
   //Get /me/trash/products
-  trashProducts(rep, res, next) {
+  trashProducts(req, res, next) {
     Product.findDeleted({})
       .then((products) => {
         res.render("admin/me/trash-products", {
@@ -33,6 +34,16 @@ class MeController {
         });
       })
       .catch(next);
+  }
+
+  // Controller Categories
+  categoriesCategories(req, res, next) {
+    Category.find({}).then((categories) => {
+      // res.json({ Category: category });
+      res.render("admin/me/stored-categories", {
+        categories: mutipleMongooseToObject(categories),
+      });
+    });
   }
 }
 module.exports = new MeController();
