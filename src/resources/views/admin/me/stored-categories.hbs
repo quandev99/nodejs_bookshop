@@ -50,3 +50,73 @@
     </tbody>
   </table>
 </div>
+
+{{! Confirm delete product }}
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="delete-category-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa sản phẩm này không?
+      </div>
+      <div class="modal-footer">
+        <button
+          id="btn-delete-category"
+          type="button"
+          class="btn btn-danger"
+        >Xóa bỏ</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{! Delete hidden form  }}
+<form class="mt-4" name="delete-category-form" method="post">
+
+</form>
+
+<script type="module">
+  document.addEventListener("DOMContentLoaded", function () { var categoryId;
+  var deleteForm = document.forms["delete-category-form"]; var btnDeleteCategory
+  = document.getElementById("btn-delete-category"); var checkboxAll =
+  $("#checkbox-all"); var categoryItemCheckbox = $(".form-check-input"); var
+  checkAllSubmitBtn = $(".check-all-submit-btn");
+  $("#delete-category-modal").on("show.bs.modal", function (event) { var button
+  = $(event.relatedTarget); categoryId = button.data("id"); });
+  btnDeleteCategory.onclick = function () { deleteForm.action =
+  "/admin/categories/" + categoryId + "/delete?_method=delete";
+  deleteForm.submit(); }; checkboxAll.change(function () { var isCheckedAll =
+  $(this).prop("checked"); productItemCheckbox.prop("checked", isCheckedAll);
+  renderCheckAllSubmitBtn(); }); productItemCheckbox.change(function () { var
+  isCheckedAll = productItemCheckbox.length ===
+  $(".form-check-input:checked").length; checkboxAll.prop("checked",
+  isCheckedAll); renderCheckAllSubmitBtn(); }); function
+  renderCheckAllSubmitBtn() { var checkedCount =
+  $(".form-check-input:checked").length; if (checkedCount > 0) {
+  checkAllSubmitBtn.attr("disabled", false); } else {
+  checkAllSubmitBtn.attr("disabled", true); } } console.log(checkAllSubmitBtn);
+  });
+</script>

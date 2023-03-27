@@ -3,7 +3,13 @@
 
     <a class="navbar-brand" href="/">
 
-      Book Shop</a>
+      <img
+        src="https://c.mgg.vn/d/shopsach.com/img/logo_header.jpg"
+        alt="icon"
+        class="icon-shop"
+        style=" 
+              border-radius: 10px;"
+      /></a>
     <button
       class="navbar-toggler"
       type="button"
@@ -29,18 +35,18 @@
             aria-expanded="false"
           >
             <img
-              src="https://fullstack.edu.vn/static/media/f8-icon.18cd71cfcfa33566a22b.png"
+              src="https://images.unsplash.com/photo-1561948955-570b270e7c36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGNhdHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60"
               alt="icon"
               class="user-avatar"
-              style=" width: 50px;
-              height: 50px;
+              style=" width:50px; height:50px;
               border-radius: 50px;
               margin-right: 10px;"
             />
             <span class="namelogin">Quandev99</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/admin/products/create">Đăng sản phẩm</a>
+            <a class="dropdown-item" href="/admin/auth/viewLogin">Đăng Nhập</a>
+            <a class="dropdown-item logoutBtn" href="#">Đăng Xuất</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="/admin/categories/create">Thêm danh
               mục sách</a>
@@ -50,10 +56,8 @@
               Của Tôi</a>
             <a class="dropdown-item" href="/admin/me/listUser">Danh sách tài
               khoản Của Tôi</a>
-            <a class="dropdown-item" href="/me/stored/news">Bài Viết Của Tôi</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item logoutBtn" href="#">Đăng Xuất</a>
-            <a class="dropdown-item" href="/admin/auth/viewLogin">Đăng Nhập</a>
+            <a class="dropdown-item" href="/admin/products/create">Đăng sản phẩm</a>
+            {{! <div class="dropdown-divider"></div> }}
 
           </div>
         </li>

@@ -65,6 +65,15 @@ class AuthController {
       })
       .catch(next);
   }
+  viewEdit(req, res, next) {
+    Auth.findById(req.params.id)
+      .then((users) =>
+        res.render("admin/auth/edit", {
+          users: mutipleToObject(users),
+        })
+      )
+      .catch(next);
+  }
 
   // POST /login
   login(req, res, next) {

@@ -23,6 +23,6 @@
   await fetch("http://localhost:1999/admin/categories/stored", { method: "POST",
   headers: { "Content-Type": "application/json" }, body: JSON.stringify({
   nameCategory: nameCategory }), }); const data = await response.json();
-  if(data?.data) { alert(data?.message) }else{ alert(data?.message) };
-  location.href = '/admin/me/stored/categories' });
+  if(data?.success===false) { return alert(data?.message); }else{
+  alert(data?.message) }; location.href = '/admin/me/stored/categories'; });
 </script>

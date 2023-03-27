@@ -1,10 +1,6 @@
 <div class="mt-4 container">
   <h3>Sữa danh mục</h3>
-  <form
-    id="form-login"
-    method="post"
-    action="/admin/categories/{{categories._id}}/update?_method=put"
-  >
+  <form id="form-edit_category">
     <div class="form-group">
       <label for="name">Tên danh mục</label>
       <input
@@ -15,20 +11,24 @@
         value="{{categories.nameCategory}}"
         placeholder="Enter Category"
       />
+
     </div>
-    <button type="submit" class="btn btn-primary">Lưu lại danh mục</button>
+    <button type="submit" id="submit-edit_form" class="btn btn-primary">Lưu lại
+      danh mục</button>
   </form>
 </div>
 
-<script>
-  /// category const loginForm = document.querySelector("#form-login"); const
-  submitBtn = document.querySelector('.btn-primary');
-  submitBtn.addEventListener("submit", async (event) => {
+<script type="text/javascript">
+  const url = location.href; const id = url.split("/")[5]; const
+  editCategoryForm = document.querySelector("#form-edit_category"); const
+  submitEditForm = document.querySelector('#submit-edit_form');
+  editCategoryForm.addEventListener("submit", async (event) => {
   event.preventDefault(); const nameCategory =
-  querySelector(".nameCategory").value; const response = await
-  fetch("/admin/categories/{{categories._id}}/update?_method=put", { method:
-  "POST", headers: { "Content-Type": "application/json" }, body:
-  JSON.stringify({ nameCategory: nameCategory }), }); const data = await
-  response.json(); if(data.Category) { alert(data.message); } else {
-  alert(data.message); } });
+  document.querySelector("#nameCategory").value; const response = await
+  fetch(`http://localhost:1999/admin/categories/${id}/update`, { method: "PUT",
+  headers: { "Content-Type": "application/json" }, body: JSON.stringify({
+  nameCategory: nameCategory }), }); const data = await
+  response.json();if(data?.success===false) { return alert(data?.message); }
+  else { alert(data?.message);return location.href =
+  '/admin/me/stored/categories';} });
 </script>

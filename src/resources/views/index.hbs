@@ -24,11 +24,23 @@
               </a>
               <p class="card-text text-truncate">{{this.description}}</p>
               <p class="card-text text-truncate">{{this.price}}</p>
+            </div>
+            <div class="card-footer">
               <a href="#" class="btn btn-primary">Mua sản phẩm</a>
             </div>
           </div>
         </div>
       {{/each}}
+    </div>
+
+  </div>
+  <div class="container">
+    <div class="category">
+      <ul class="list-category">
+        {{#each categories}}
+          <a href=""><li>{{this.nameCategory}}</li></a>
+        {{/each}}
+      </ul>
     </div>
   </div>
 </div>

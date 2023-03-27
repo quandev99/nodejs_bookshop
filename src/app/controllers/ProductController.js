@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const Category = require("../models/Category");
 const slugify = require("slugify");
 const mongoose = require("mongoose");
 const slug = require("mongoose-slug-generator");
@@ -22,7 +23,11 @@ class ProductController {
 
   //[Get] /products/create
   create(req, res, next) {
-    res.render("admin/products/create");
+    Category.find({}).then((categories) => {
+      res.render("admin/products/create", {
+        categories: mutipleMongooseToObject(categories),
+      });
+    });
   }
   //[Post] /product/store
   store(req, res, next) {
@@ -50,8 +55,8 @@ class ProductController {
 
   //[Get] /products/:id/
   update(req, res, next) {
-    const { name, description, image, price } = req.body;
-    if (!name || !description || !image || !price) {
+    const { name, description, image, category, price } = req.body;
+    if (!name || !category || !description || !image || !price) {
       return res
         .status(400)
         .json({ message: "Vui lòng nhập đầy đủ thông tin" });

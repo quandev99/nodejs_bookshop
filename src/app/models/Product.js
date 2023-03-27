@@ -11,6 +11,7 @@ const Product = new Schema(
     price: { type: String, require: true },
     slug: { type: String, require: true, slug: "name" },
     level: { type: String, require: true },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: "Categories" },
   },
   {
     timestamps: true,
