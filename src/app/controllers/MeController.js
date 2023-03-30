@@ -8,13 +8,13 @@ class MeController {
   //Get /me/stored/products
   storedProducts(req, res, next) {
     let productQuery = Product.find({});
-    if (req.query.hasOwnProperty("_sort")) {
-      productQuery = productQuery.sort({
-        // [req.query.column]: req.query.type,
-        name: "asc",
-      });
-      return;
-    }
+    // if (req.query.hasOwnProperty("_sort")) {
+    //   productQuery = productQuery.sort({
+    //     // [req.query.column]: req.query.type,
+    //     name: "asc",
+    //   });
+    //   return;
+    // }
     Promise.all([productQuery, Product.countDocumentsDeleted()])
       .then(([products, deletedProduct]) => {
         res.render("admin/me/stored-products", {

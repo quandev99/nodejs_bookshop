@@ -43,7 +43,7 @@ app.engine(
 app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "resources", "views"));
 app.set("admin", path.join(__dirname, "resources", "views/admin/views"));
-
+app.set("env", "development");
 // Route init
 route(app);
 

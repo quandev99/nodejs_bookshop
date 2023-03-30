@@ -1,7 +1,7 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
-const slugify = require("slugify");
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 const slug = require("mongoose-slug-generator");
 
 const {
@@ -9,16 +9,22 @@ const {
   mutipleToObject,
 } = require("../../until/mongoose");
 class ProductController {
-  show(req, res, next) {
-    Product.findOne({ slug: req.params.slug })
-      .then((product) => {
-        res.render("detaill", {
-          product: mutipleToObject(product),
-        });
-      })
-      .catch((err) => {
-        next(err);
+  async show(req, res, next) {
+    const product = await Product.findOne({ slug: req.params.slug }).lean();
+    const productRelated = await Product.find({
+      category: product?.category,
+    }).lean();
+    const productRelatedWithoutCurrent = productRelated.filter(
+      (p) => p.slug !== product.slug
+    );
+    try {
+      res.render("detaill", {
+        product: product,
+        productRelated: productRelatedWithoutCurrent,
       });
+    } catch (err) {
+      res.status(400).json({ message: "Ko xem duoc" });
+    }
   }
 
   //[Get] /products/create
@@ -38,7 +44,7 @@ class ProductController {
       .save()
       .then(() => res.redirect("/admin/me/stored/products"))
       .catch((err) => {
-        res.render("error", err);
+        res.render("Thêm sản phẩm không thành công", err);
       });
   }
 
@@ -56,7 +62,7 @@ class ProductController {
   //[Get] /products/:id/
   update(req, res, next) {
     const { name, description, image, category, price } = req.body;
-    if (!name || !category || !description || !image || !price) {
+    if (!name || !description || !image || !price) {
       return res
         .status(400)
         .json({ message: "Vui lòng nhập đầy đủ thông tin" });

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-light">
   <div class="container">
 
     <a class="navbar-brand" href="/">
@@ -8,6 +8,8 @@
         alt="icon"
         class="icon-shop"
         style=" 
+          width:100px;
+          height:50px;
               border-radius: 10px;"
       /></a>
     <button
@@ -23,6 +25,17 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="/categoryProduct">Sản phẩm</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#">liên hệ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#">Liên hệ</a>
+        </li>
+      </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
           <a
@@ -42,21 +55,21 @@
               border-radius: 50px;
               margin-right: 10px;"
             />
-            <span class="namelogin">Quandev99</span>
+            <span class="namelogin text-dark">Quandev99</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="/admin/auth/viewLogin">Đăng Nhập</a>
             <a class="dropdown-item logoutBtn" href="#">Đăng Xuất</a>
             <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/admin/products/create">Đăng sản phẩm</a>
             <a class="dropdown-item" href="/admin/categories/create">Thêm danh
               mục sách</a>
-            <a class="dropdown-item" href="/admin/me/stored/categories">Danh mục
-              sách</a>
             <a class="dropdown-item" href="/admin/me/stored/products">Sản phẩm
               Của Tôi</a>
+            <a class="dropdown-item" href="/admin/me/stored/categories">Danh mục
+              sách</a>
             <a class="dropdown-item" href="/admin/me/listUser">Danh sách tài
               khoản Của Tôi</a>
-            <a class="dropdown-item" href="/admin/products/create">Đăng sản phẩm</a>
             {{! <div class="dropdown-divider"></div> }}
 
           </div>
@@ -79,11 +92,11 @@
 </nav>
 
 <script type="text/javascript">
-  const user = JSON.parse(localStorage.getItem("user")); console.log(user);
-  const nameLogin = document.querySelector(".nameLogin"); const userAvatar =
+  const user = JSON.parse(localStorage.getItem("user")); const nameLogin =
+  document.querySelector(".nameLogin"); const userAvatar =
   document.querySelector(".user-avatar"); if(user?.userName && user?.avatar) {
   const srcAvatarUser = user.avatar; nameLogin.textContent = user.userName ;
-  userAvatar.src = srcAvatarUser} const logoutBtn =
+  userAvatar.src = srcAvatarUser}; const logoutBtn =
   document.querySelector(".logoutBtn"); logoutBtn &&
   logoutBtn.addEventListener("click", (e) => { e.preventDefault();
   localStorage.clear(); alert("Dang xuat khoi the gioi thanh cong");

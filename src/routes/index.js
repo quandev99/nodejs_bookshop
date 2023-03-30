@@ -5,6 +5,8 @@ const productsRoute = require("./products");
 const categoriesRoute = require("./categories");
 const authRouter = require("./auth");
 const adminRoute = require("./admin");
+const categoryProductRoute = require("./categoryProduct");
+const commentRoute = require("./comments");
 
 function route(app) {
   // app.post("/register", authRouter);
@@ -15,6 +17,8 @@ function route(app) {
   app.use("/admin/categories", categoriesRoute);
   app.use("/news", newsRoute);
   app.use("/admin", adminRoute);
+  app.use("/categoryProduct", categoryProductRoute);
+  app.use("/comment", commentRoute);
   app.use("/", siteRoute);
 }
 

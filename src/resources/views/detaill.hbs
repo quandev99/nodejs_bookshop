@@ -1,24 +1,302 @@
-<div class="mt-4 container">
-  <div class="row">
-    <div class="col-lg-5">
-      <img
-        width=""
-        height="506"
-        src="{{product.image}}"
-        title="sản phẩm"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        img
-      />
+<div class="mt-4 mb-4 container">
+  <section>
+    <div class="product-detail p-3 mb-4 bg-light border border-warning rounded">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <img class="card-img-top img-fluid rounded-lg border border-warning rounded" style="max-width: 100%;"
+            src="{{product.image}}" title="sản phẩm" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            img />
+        </div>
+        <div class="col-xs-12 col-sm-5">
+          <div class="infor-product">
+            <h1 class="" style="font-size: 24px;">{{product.name}}</h1>
+            <span class="brand" style="margin-bottom:5px"></span>
+            <div class="product-att p-2 border-top text-wrap text-justify">
+              <p style="font-size: 14px;line-height:1.5em; display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;">{{product.description}}</p>
+            </div>
+            <div class="product-status mt-1">
+              <strong class="text-success font-weight-normal">Còn hàng</strong>
+            </div>
+            <div class="product-price mt-2">
+              <p class="text-danger">{{product.price}} đ</p>
+            </div>
+            <div class="product-buy text-center rounded rounded-5 mt-1 mb-2 bg-danger text-white col-lg-4">
+              <button class="btn btn-danger btn-buy-now">Mua Ngay</button>
+            </div>
+            <p>{{product.categories.nameCategory}}</p>
+          </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-3">
+          <div id="product-seller">
+            <style type="text/css">
+              .right-box-tiki {
+                background-color: #f9f9f9;
+                border: 1px solid #f6f6f6;
+                padding: 10px 10px 10px 20px;
+                border-radius: 3px
+              }
+
+              .right-box-tiki ul {
+                list-style: none;
+                padding: 0;
+                margin: 0
+              }
+
+              .right-box-tiki ul li {
+                padding: 10px 0
+              }
+
+              .right-box-tiki i {
+                color: #fe0100;
+                padding-right: 5px
+              }
+
+              .right-box-tiki svg {
+                color: #fe0100;
+                padding-right: 5px;
+                height: 14px;
+                fill: currentColor;
+                min-width: 24px
+              }
+
+              .right-box-tiki .right-box-seller {
+                display: block;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eee
+              }
+
+              .right-box-tiki .right-box-seller .right-box-a {
+                display: block;
+                text-align: center;
+                font-size: 18px;
+                padding-top: 5px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eee;
+                margin-bottom: 10px
+              }
+
+              @media only screen and (max-width: 767px) {
+                .right-box-tiki {
+                  padding: 5px 5px 5px 10px
+                }
+
+                .right-box-tiki ul li {
+                  padding: 5px 0
+                }
+              }
+            </style>
+            <div class="right-box-tiki">
+              <div class="right-box-seller"><span>
+                  <i class="fa-solid fa-building"></i> Công ty:</span><span class="right-box-a"><a href="/"
+                    title="Công ty Nhà sách Fahasa"><strong>Nhà
+                      sách Fahasa</strong></a></span><a href="/"
+                  title="Coloring &amp; Stickers bán bởi Nhà sách Fahasa"><i class="fa-solid fa-star"></i><small>Xem
+                    thêm các tác phẩm <strong>Coloring &amp; Stickers</strong> bởi <strong>Nhà sách
+                      Fahasa</strong></small></a></div>
+              <ul>
+                <li><i class="fa-solid fa-truck-fast"></i> Giao hàng toàn quốc</li>
+                <li><i class="fa-duotone fa-box-open"></i> Được kiểm tra hàng</li>
+                <li><i class="fa-solid fa-money-check-dollar"></i> Thanh toán khi nhận hàng</li>
+                <li><i class="fa-solid fa-medal"></i> Chất lượng, Uy tín</li>
+                <li><i class="fa-sharp fa-solid fa-right-left"></i> 7 ngày đổi trả dễ dàng</li>
+                <li><i class="fa-solid fa-file-invoice"></i> Hỗ trợ xuất hóa đơn đỏ</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-lg-7">
-      <h2>{{product.name}}</h2>
-      <p>{{product.description}}</p>
-      <p>{{product.price}}</p>
-      <button>Mua Ngay</button>
-      <ul>
-        <li>Sách giáo khoa</li>
-      </ul>
-    </div>
-  </div>
+    <div class="product-box">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12">
+          <div class="product-related">
+            <h3 class="bg-success text-white px-3 rounded-top"
+              style="line-height: 46px;font-size: 15px;text-transform: uppercase;font-weight: 600;">Sản phẩm tương tự
+            </h3>
+            <div class="row">
+              {{#each productRelated }}
+              <div class="col-lg-3 col-md-6 col-sm-6 mb-3 pagination pagination-circle">
+                <div class="card">
+                  <div class="card-image p-4 bg-image hover-overlay hover-zoom hover-shadow ripple">
+                    <a href="/admin/products/{{this.slug}}" class="d-block rounded-lg lift lift-lg">
+                      <img class="img-fluid rounded-lg" src="{{this.image}}" alt="{{this.image}}" />
+                      <a href="#!">
+                        <div class="mask" style="background-color: hsla(195, 83%, 58%, 0.2)"></div>
+                      </a>
+                    </a>
+                  </div>
+                  <div class="card-body card">
+                    <a href="/admin/products/{{this.slug}}">
+                      <h5 class="card-title text-truncate">{{this.name}}</h5>
+                    </a>
+                    <p class="card-text text-truncate">{{this.description}}</p>
+                    <p class="card-text text-danger text-right">{{this.price}}
+                      đ</p>
+                  </div>
+                  <div class="card-footer">
+                    <button href="#" class="btn btn-primary bg-danger border-0">Mua sản phẩm</button>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="tab-wrap div-shadow d-block mb-4 rounded bg-light ">
+            <a href="#gioithieu"
+              class="active border-bottom border-success d-inline-block text-dark text-center py-3 px-5 ">Giới
+              thiệu<span class="hidden-xs"> sản
+                phẩm</span></a>
+            <a href="#thongtin" class="d-inline-block text-dark text-center py-3 px-5 "><span class="hidden-xs">Thông
+                tin </span>chi tiết</a>
+          </div>
+          <div id="product-info" class="p-3 bg-light rounded">
+            <div id="gioithieu" class="text-wrap text-justify">
+              <h2 style="font-size:24px;line-height: 1.6em;color:#333e48;" class="mb-3">Giới thiệu {{product.name}}</h2>
+              <div class="product-detail text-wrap text-justify">
+                <p class="" style="font-size: 14px; line-height: 1.6em;font-weight: 400;">{{product.description}}
+
+                </p>
+              </div>
+              <br />
+              <br />
+              Tác giả Hemawan Kartajaya
+              <br />
+              Người Dịch Lan Phương, Thanh Huyền
+              <br />
+              NXB NXB Lao Động - Xã Hội
+              <br />
+              Năm XB 2018
+              <br />
+              Trọng lượng (gr) 400
+              <br />
+              Kích thước 13 x 20.5
+              <br />
+              Số trang 384
+              <br />
+              Hình thức Bìa Mềm
+              <br />
+              Ngôn ngữ Sách tiếng Việt
+              <p>Gooda tin rằng cuốn sách sẽ mang lại kiến thức thật bổ ích cùng
+                những trải nghiệm thật tuyệt vời, hy vọng đây sẽ là 1 cuốn sách
+                quý trên kệ sách của bạn!</p>
+              <p> </p>
+              <p>QUYỀN LỢI KHÁCH HÀNG KHI MUA SÁCH TẠI SHOP GOODA THƯ VIỆN SÁCH
+                QUÝ:</p>
+              <p> </p>
+              <p>1. Đảm bảo 100% sách gốc bản quyền từ NXB</p>
+              <p>2. Quy cách đóng gói cẩn thận, trận trọng từng quyển sách</p>
+              <p>3. Xử lí đơn đặt hàng nhanh</p>
+              <p>4. Chính sách hỗ trợ đổi sách cho khách hàng thuận tiện khi gặp
+                sự cố</p>
+              <p>Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên
+                cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng
+                mà có thể phát sinh thêm chi phí khác như phí vận chuyển, phụ
+                phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ
+                nước ngoài có giá trị trên 1 triệu đồng).....</p><br /><a href="https://giacoin.com/tienao/astrox/"
+                title="Giá ATX" target="_blank" ref="noopener">Giá ATX</a>
+            </div>
+            <div id="gioithieuthem" class="text-center"
+              style="position: relative;top: -66px;height: 66px;width: 100%;background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, #fff 100%);padding-top: 66px;">
+              <a href="https://shopsach.com/mua/ti208174832.html" class="btn btn-default" target="_blank"
+                title="Xem thêm thông tin" style="color:#0d6efd;border-color:#0d6efd">Xem thêm thông tin sản phẩm</a>
+            </div>
+            <div id="thongtin" itemscope="" itemtype="https://schema.org/Table">
+              <h2 itemprop="about">Thông tin chi tiết</h2>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <th>Công ty phát
+                        hành</th>
+                      <td>Alphabooks</td>
+                    </tr>
+                    <tr>
+                      <th>Nhà xuất bản</th>
+                      <td>Nhà Xuất Bản Lao Động</td>
+                    </tr>
+                    <tr>
+                      <th>SKU</th>
+                      <td>7719217593509</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div id="comment">
+            <div class="row">
+              <form action="/comment/{{product._id}}" method="post" id="form-comment">
+              <input type="text" value="{{product._id}}" name="producId" class="producId" id="producId" hidden>
+              <input type="text" value="{{userIdCtrol}}" name="userId" class="userId" id="userId" hidden>
+              <input type="text" value="{{userName}}" name="userName" class="userName" id="userName" hidden>
+              <input type="text" value="{{userImage}}" name="userImage" class="userImage" id="userImage" hidden>
+                <div class="form-group">
+                  <label for="">Chọn Sao</label>
+                  <select class="form-control" name="rating" id="rating">
+                    <option value="">Chọn Sao</option>
+                    <option value="1">1 Sao</option>
+                    <option value="2">2 Sao</option>
+                    <option value="3">3 Sao</option>
+                    <option value="4">4 Sao</option>
+                    <option value="5">5 Sao</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="review">Đánh Giá</label>
+                  <textarea class="form-control" name="review" id="review" rows="3" placeholder="review">
+                  </textarea>
+                </div>
+
+                <button type="submit">Gửi</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
 </div>
+
+<script type="text/javascript">
+const formComment = document.querySelector('#form-comment');
+  const user1 = JSON.parse(localStorage.getItem("user"));
+  const userId = user1._id;
+  const userName = user1.userName;
+  const userImage = user1.avatar;
+  const userIdCtrol = document.querySelector("#userId")
+  const userNameCtrol = document.querySelector("#userName")
+  const userImageCtrol = document.querySelector("#userImage")
+  if(user1){
+    userIdCtrol.value = userId;
+    userNameCtrol.value = userName;
+    userImageCtrol.value = userImage;
+  }
+
+
+
+</script>
+
+{{!-- 
+const rating = document.querySelector('#rating').value;
+  const review = document.querySelector('#review').value;
+  const producId = document.querySelector('#producId').value;
+const response = await fetch(`https://localhost:1999/comment/addComment`,{
+    method: "POST", headers: {"Content-Type": "application/json" },
+      body:JSON.stringify({
+      rating:rating,
+      review:review,
+      producId:producId,
+      userId:userId,
+      userName:userName,
+      userImage:userImage,
+      }),
+  });
+  const data = await response.json();
+  console.log(data); --}}

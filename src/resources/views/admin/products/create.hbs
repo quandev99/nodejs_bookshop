@@ -1,7 +1,7 @@
 <div class="mt-4 container">
   <h3 class="text-center">Đăng sản phẩm</h3>
   <div class="col-lg-12 mt-3">
-    <form action="/admin/products/store" method="post" role="form">
+    <form action="/admin/products/store" method="post">
       <div class="row">
         <div class="col-md-6 form-group">
           <label for="name">Tên sản phẩm</label>
@@ -11,7 +11,6 @@
             class="form-control"
             id="name"
             placeholder="Your Name"
-            required=""
           />
         </div>
         <div class="col-md-6 form-group mt-3 mt-md-0">
@@ -32,7 +31,7 @@
       >
         <option class="text-center" value="">-- Lựa chọn danh mục --</option>
         {{#each categories}}
-          <option value="{{this.slug}}">{{this.slug}}</option>
+          <option value="{{this._id}}">{{this.slug}}</option>
         {{/each}}
       </select>
       <div class="form-group mt-3">
@@ -53,11 +52,9 @@
           id="description"
           rows="5"
           placeholder="description"
-          required=""
         ></textarea>
       </div>
       <div class="my-3">
-        <div class="loading">Loading</div>
         <div class="error-message"></div>
       </div>
       <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>

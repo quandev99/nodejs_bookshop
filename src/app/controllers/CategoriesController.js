@@ -97,44 +97,6 @@ class CategoriesController {
           message: err.message || "Thất bại!",
         });
       });
-
-    // Category.findOne({ nameCategory: nameCategory })
-    //   .then((category) => {
-    //     if (category && category._id != req.params.id) {
-    //       return res
-    //         .status(400)
-    //         .json({ message: "Tên danh mục đã được sử dụng" });
-    //     }
-    //     Category.findByIdAndUpdate(
-    //       { _id: req.params.id },
-    //       { nameCategory: req.body.nameCategory },
-    //       { new: true }
-    //     )
-    //       .then((category) => {
-    //         // Cập nhật thành công slug khi tên danh mục thay đổi
-    //         category.slug = slugify(category.nameCategory, {
-    //           lower: true,
-    //         });
-    //         return category.save();
-    //       })
-    //       .then((category) => {
-    //         return res.status(200).json({
-    //           category,
-    //           message: "Cập nhật danh mục thành công",
-    //         });
-    //         // res.redirect("/admin/me/stored/categories");
-    //       })
-    //       .catch((err) => {
-    //         return res.status(500).json({
-    //           message: "Loi" + err,
-    //         });
-    //       });
-    //   })
-    //   .catch((err) => {
-    //     return res.status(500).json({
-    //       message: "Loi" + err,
-    //     });
-    //   });
   }
 }
 // Add plugins

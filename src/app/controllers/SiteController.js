@@ -20,8 +20,8 @@ class SiteController {
   // }
   async index(req, res, next) {
     try {
-      const products = await Product.find({});
-      const categories = await Category.find({});
+      const products = await Product.find().limit(16);
+      const categories = await Category.find();
       res.render("index", {
         products: mutipleMongooseToObject(products),
         categories: mutipleMongooseToObject(categories),
