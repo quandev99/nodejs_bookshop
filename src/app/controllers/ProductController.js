@@ -1,5 +1,7 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
+const Comment = require("../models/Comment");
+const Auth = require("../models/Auth");
 const mongoose = require("mongoose");
 const slugify = require("slugify");
 const slug = require("mongoose-slug-generator");
@@ -14,6 +16,9 @@ class ProductController {
     const productRelated = await Product.find({
       category: product?.category,
     }).lean();
+    const comments = await Comment.find({
+      productId: product._id,
+    }).lean();
     const productRelatedWithoutCurrent = productRelated.filter(
       (p) => p.slug !== product.slug
     );
@@ -21,6 +26,7 @@ class ProductController {
       res.render("detaill", {
         product: product,
         productRelated: productRelatedWithoutCurrent,
+        comments: comments,
       });
     } catch (err) {
       res.status(400).json({ message: "Ko xem duoc" });

@@ -49,30 +49,70 @@ class AuthController {
     });
   }
   viewRegister(req, res) {
-    res.render("auth/register");
+    res.render("admin/auth/register");
   }
 
   viewLogin(req, res, next) {
     res.render("admin/auth/loginUser");
   }
 
-  listUser(req, res, next) {
-    Auth.find({})
-      .then((users) => {
-        res.render("admin/me/list-users", {
-          users: mutipleMongooseToObject(users),
+  async listUser(req, res, next) {
+    const listAuth = await Auth.find({}).lean();
+    try {
+      res.status(200).render("admin/me/list-users", {
+        users: listAuth,
+        message: "Hiển thị được toàn bộ tài khoản người dùng",
+      });
+    } catch {
+      res.status(500).json({ message: "Lỗi hiển thị danh sách Users" });
+    }
+  }
+  async viewEdit(req, res, next) {
+    const viewEdit = await Auth.findById(req.params.id).lean();
+    try {
+      res.status(200).render("admin/auth/edit", {
+        user: viewEdit,
+      });
+    } catch {
+      res.status(500).json({ message: "Lỗi hiển thị danh sách Users" });
+    }
+  }
+
+  updateUser(req, res, next) {
+    const { id } = req.params;
+    const { fullName, userName, email, avatar, password = "" } = req.body;
+    if (!fullName || !userName || !email || !avatar) {
+      return res.status(500).json({
+        success: false,
+        message: "Bạn không được bỏ trống tên tài khoản!",
+      });
+    }
+    Auth.findById(id)
+      .then((user) => {
+        if (!user) {
+          res.status(500).json("Tài khoản không tồn tại!");
+        }
+        if (user && user._id != id) {
+          res.status(400).json({
+            success: false,
+            message: "Tên tài khoản đã được sử dụng",
+          });
+        }
+        return user.save();
+      })
+      .then((user) => {
+        res.status(200).json({
+          success: true,
+          data: user,
+          message: "Cập nhật tài khoản thành công!",
         });
       })
-      .catch(next);
-  }
-  viewEdit(req, res, next) {
-    Auth.findById(req.params.id)
-      .then((users) =>
-        res.render("admin/auth/edit", {
-          users: mutipleToObject(users),
-        })
-      )
-      .catch(next);
+      .catch((err) => {
+        res.status(400).json({
+          success: false,
+          message: err.message || "Thất bại!",
+        });
+      });
   }
 
   // POST /login
@@ -112,25 +152,11 @@ class AuthController {
     });
   }
 
-  // login(req, res, next) {
-  //   const userName = req.body.userName;
-  //   const password = req.body.password;
-  //   Auth.findOne({ userName: userName, password: password })
-  //     .then((data) => {
-  //       if (!data) {
-  //         res.send({
-  //           message: "Sai tai khoan hoac mat khau",
-  //         });
-  //       } else {
-  //         res.status(200).json({
-  //           message: "Dang nhap thanh cong",
-  //           user: data,
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       res.status(400).send(err);
-  //     });
-  // }
+  //[Delete] /admin/auth/:id/deleteUser
+  deleteUser(req, res, next) {
+    Auth.deleteOne({ _id: req.params.id })
+      .then(() => res.redirect("back"))
+      .catch(next);
+  }
 }
 module.exports = new AuthController();

@@ -2,22 +2,20 @@
   <form
     class="mt-4"
     name="container-form"
-    method="post"
-    action=""
   >
     <div>
-      <h3>Thông tin tài khoản {{users.fullName}}</h3>
-      {{!-- <a href="/admin/me/trash/users">Rác ({{deleteduser}})</a> --}}
+      <h3>Thông tin tài khoản {{user.fullName}}</h3>
     </div>
 
     <table class="table mt-4">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Tên tài khoản
-          </th>
+          <th scope="col">Tên tài khoản</th>
+          <th scope="col">Tên đăng nhập</th>
           <th scope="col">Email</th>
           <th scope="col">Hình ảnh</th>
+          <th scope="col"></th>
           </th>
           </th>
         </tr>
@@ -29,26 +27,25 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  name="userIds[]"
-                  value="{{users._id}}"
+                  name="userId"
+                  value="{{user._id}}"
                 />
               </div>
             </td>
-            <td><input type="text" class=" border-primary form-control" value="{{users.fullName}}"></td>
-            <td><input style="width:260px" class="border-0 form-control" type="text" value="{{users.email}}"></td>
-            <td class="" style="width: 100px;height:100px"><img class="img-fluid"  style="width: 100%;height:100%" src="{{users.avatar}}" style="" alt="" /></td>
+            <td>
+              <input type="text" name="fullName" class="form-control fullName" value="{{user.fullName}}">
+            </td>
+            <td>
+              <input type="text" name="userName" class="form-control userName" value="{{user.userName}}">
+            </td>
+            <td><input style="width:260px" name="email" class="border-0 form-control email" type="text" value="{{user.email}}"></td>
+            <td class="" style="width: 100px;height:100px"><img class="img-fluid"  style="width: 100%;height:100%" src="{{user.avatar}}" style="" alt="" />
+            <input type="text" class="avatar" name="avatar" value="{{user.avatar}}" hidden></td>
             <td>
               <a
-                href="/admin/auth/{{users._id}}/update"
                 class="btn btn-link"
-              >Cập nhật</a>
-              <a
-                href=""
-                data-id="{{users._id}}"
-                class="btn btn-link"
-                data-toggle="modal"
-                data-target="#delete-user-modal"
-              >Xóa</a>
+              >Cập nhật
+              </a>            
             </td>
           </tr>
       </tbody>
@@ -57,56 +54,29 @@
 </div>
 {{! Confirm delete user }}
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="delete-user-modal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Bạn có chắc chắn muốn xóa Danh sách tài khoản này không?
-      </div>
-      <div class="modal-footer">
-        <button id="btn-delete-user" type="button" class="btn btn-danger">Xóa bỏ</button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-dismiss="modal"
-        >Hủy</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-{{! Delete hidden form  }}
-<form class="mt-4" name="delete-user-form" method="post">
 
 </form>
-<script type="module">
-  document.addEventListener('DOMContentLoaded', function(){ var userdId; var
-  deleteForm = document.forms['delete-user-form']; var containerForm =
-  document.forms['container-form'] ;var btnDeleteUser =
-  document.getElementById('btn-delete-user'); var checkboxAll =
-  $('#checkbox-all');var userItemCheckbox = $('.form-check-input'); var
-  checkAllSubmitBtn = $('.check-all-submit-btn');
-  $('#delete-user-modal').on('show.bs.modal', function (event) { var button =
-  $(event.relatedTarget); userdId = button.data('id') ; }) ;
-  btnDeleteUser.onclick = function(){ deleteForm.action = '/users/' + userdId +
-  '?_method=delete' ; deleteForm.submit()}})
-  
+<script type="module">  
+    const url = location.href; const id = url.split("/")[5];
+    const btnEdit = document.querySelector(".btn-link");
+    btnEdit.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const fullName = document.querySelector(".fullName").value;
+    const userName = document.querySelector(".userName").value;
+    const email = document.querySelector(".email").value;
+    const avatar = document.querySelector(".avatar").value;
+    const response = await
+  fetch(`http://localhost:1999/admin/auth/${id}/updateUser`,
+    { method: "PUT",
+  headers: { "Content-Type": "application/json" }, body: JSON.stringify({fullName:fullName,userName:userName,email:email,avatar:avatar}),}); 
+    const data = await response.json();
+
+    if(data?.success === false){
+      return alert(data?.message)
+    }else{
+      alert(data?.message)
+    }
+    location.href = "/admin/me/listUser"
+    console.log(data);
+  });
 </script>

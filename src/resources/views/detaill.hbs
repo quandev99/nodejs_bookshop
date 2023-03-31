@@ -200,13 +200,7 @@
                 cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng
                 mà có thể phát sinh thêm chi phí khác như phí vận chuyển, phụ
                 phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ
-                nước ngoài có giá trị trên 1 triệu đồng).....</p><br /><a href="https://giacoin.com/tienao/astrox/"
-                title="Giá ATX" target="_blank" ref="noopener">Giá ATX</a>
-            </div>
-            <div id="gioithieuthem" class="text-center"
-              style="position: relative;top: -66px;height: 66px;width: 100%;background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, #fff 100%);padding-top: 66px;">
-              <a href="https://shopsach.com/mua/ti208174832.html" class="btn btn-default" target="_blank"
-                title="Xem thêm thông tin" style="color:#0d6efd;border-color:#0d6efd">Xem thêm thông tin sản phẩm</a>
+                nước ngoài có giá trị trên 1 triệu đồng).....</p><br />
             </div>
             <div id="thongtin" itemscope="" itemtype="https://schema.org/Table">
               <h2 itemprop="about">Thông tin chi tiết</h2>
@@ -231,33 +225,62 @@
               </div>
             </div>
           </div>
-          <div id="comment">
-            <div class="row">
-              <form action="/comment/{{product._id}}" method="post" id="form-comment">
-              <input type="text" value="{{product._id}}" name="producId" class="producId" id="producId" hidden>
-              <input type="text" value="{{userIdCtrol}}" name="userId" class="userId" id="userId" hidden>
-              <input type="text" value="{{userName}}" name="userName" class="userName" id="userName" hidden>
-              <input type="text" value="{{userImage}}" name="userImage" class="userImage" id="userImage" hidden>
-                <div class="form-group">
-                  <label for="">Chọn Sao</label>
-                  <select class="form-control" name="rating" id="rating">
-                    <option value="">Chọn Sao</option>
-                    <option value="1">1 Sao</option>
-                    <option value="2">2 Sao</option>
-                    <option value="3">3 Sao</option>
-                    <option value="4">4 Sao</option>
-                    <option value="5">5 Sao</option>
-                  </select>
+          <div id="comment" class="bg-white mt-4 p-3">
+            <h3>ĐÁNH GIÁ SẢN PHẨM</h3>
+            <div class="row ">
+              {{#each comments}}
+              <div class="col-xl-12 col-sm-6 pb-1 bg-white rounded bg-light">
+                <div class="product-rating d-flex align-items-center border-top">
+                  <div class="userAvatar col-xl-1">
+                    <img style="width: 45px; height: 45px"
+              class="rounded-circle" src="{{this.userImage}}" alt="">
+                  </div>
+                  <div class="userName-rating col-xl-4 align-items-center">
+                      <h3>{{this.userName}}</h3>
+                      <div class="box-rating">
+                        <span class="rating d-none">{{this.rating}}</span>
+                        <div class="listRating"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="col-xl-6 mt-2">Nội dung đánh giá: {{this.review}}</p>
                 </div>
-                <div class="form-group">
-                  <label for="review">Đánh Giá</label>
-                  <textarea class="form-control" name="review" id="review" rows="3" placeholder="review">
-                  </textarea>
-                </div>
-
-                <button type="submit">Gửi</button>
-              </form>
+              </div>
+              {{else}}
+              <div class="text-center col-xl-12 col-sm-6 bg-white">
+                <p class="">Sản phẩm chưa có đánh giá nào</p>
+              </div>
+              {{/each}}
             </div>
+            <div class="row">
+              <div class="col-xl-12 bg-white ">             
+                <h3>Mời bạn đánh giá sản phẩm</h3>
+                <form action="/comment/{{product._id}}" method="post" id="form-comment">
+                <input type="text" value="{{product._id}}" name="producId" class="producId" id="producId" hidden>
+                <input type="text" value="{{userIdCtrol}}" name="userId" class="userId" id="userId" hidden>
+                <input type="text" value="{{userName}}" name="userName" class="userName" id="userName" hidden>
+                <input type="text" value="{{userImage}}" name="userImage" class="userImage" id="userImage" hidden>
+                  <div class="form-group">
+                    <label for="">Chọn Sao</label>
+                    <select class="form-control" name="rating" id="rating">
+                      <option value="">Chọn Sao</option>
+                      <option value="1">1 Sao</option>
+                      <option value="2">2 Sao</option>
+                      <option value="3">3 Sao</option>
+                      <option value="4">4 Sao</option>
+                      <option value="5">5 Sao</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="review">Đánh Giá</label>
+                    <textarea class="form-control" name="review" id="review" rows="3" placeholder="review">
+                    </textarea>
+                  </div>
+
+                  <button type="submit">Gửi</button>
+                </form>
+              </div>            
+            </div>          
           </div>
         </div>
       </div>
@@ -265,29 +288,46 @@
 </div>
 
 <script type="text/javascript">
+
 const formComment = document.querySelector('#form-comment');
-  const user1 = JSON.parse(localStorage.getItem("user"));
-  const userId = user1._id;
-  const userName = user1.userName;
-  const userImage = user1.avatar;
-  const userIdCtrol = document.querySelector("#userId")
-  const userNameCtrol = document.querySelector("#userName")
-  const userImageCtrol = document.querySelector("#userImage")
+const user1 = JSON.parse(localStorage.getItem("user"));
+const userId = user1._id;
+const userName = user1.userName;
+const userImage = user1.avatar;
+const userIdCtrol = document.querySelector("#userId")
+const userNameCtrol = document.querySelector("#userName")
+const userImageCtrol = document.querySelector("#userImage")
   if(user1){
     userIdCtrol.value = userId;
     userNameCtrol.value = userName;
     userImageCtrol.value = userImage;
   }
 
+const ratings = document.querySelectorAll('.rating');
+
+[...ratings].forEach((item) => {
+const listRating = item.nextElementSibling;
+const parsedRating = parseInt(item.textContent.trim()); // convert text content to integer
+
+  let stars = "";
+  for (let i = 0; i < parsedRating; i++) {
+    stars += `<i class="text-danger fa fa-star"></i>`;
+  }
+  for (let i = parsedRating; i < 5; i++) {
+    stars += `<i class="text-muted fa fa-star"></i>`;
+  }
+  listRating.innerHTML = stars;
+});
+
 
 
 </script>
 
 {{!-- 
+
 const rating = document.querySelector('#rating').value;
   const review = document.querySelector('#review').value;
-  const producId = document.querySelector('#producId').value;
-const response = await fetch(`https://localhost:1999/comment/addComment`,{
+  const producId = document.querySelector('#producId').value;const response = await fetch(`https://localhost:1999/comment/addComment`,{
     method: "POST", headers: {"Content-Type": "application/json" },
       body:JSON.stringify({
       rating:rating,
@@ -299,4 +339,5 @@ const response = await fetch(`https://localhost:1999/comment/addComment`,{
       }),
   });
   const data = await response.json();
-  console.log(data); --}}
+  console.log(data);
+ --}}
