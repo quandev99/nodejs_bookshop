@@ -20,14 +20,13 @@
 
 <script type="text/javascript">
   const url = location.href; const id = url.split("/")[5]; const
-  editCategoryForm = document.querySelector("#form-edit_category"); const
-  submitEditForm = document.querySelector('#submit-edit_form');
+  editCategoryForm = document.querySelector("#form-edit_category");
   editCategoryForm.addEventListener("submit", async (event) => {
-  event.preventDefault(); const nameCategory =
+  event.preventDefault(); const nameCategoryCtr =
   document.querySelector("#nameCategory").value; const response = await
   fetch(`http://localhost:1999/admin/categories/${id}/update`, { method: "PUT",
   headers: { "Content-Type": "application/json" }, body: JSON.stringify({
-  nameCategory: nameCategory }), }); const data = await
+  nameCategory: nameCategoryCtr }), }); const data = await
   response.json();if(data?.success===false) { return alert(data?.message); }
   else { alert(data?.message);return location.href =
   '/admin/me/stored/categories';} });

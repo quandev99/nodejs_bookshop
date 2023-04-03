@@ -7,7 +7,11 @@ const Comment = new Schema(
     userImage: { type: String, require: true },
     review: { type: String, require: true },
     rating: { type: Number, require: true },
-    productId: { type: String, require: true },
+    productId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+      require: true,
+    },
   },
   {
     timestamps: true,
