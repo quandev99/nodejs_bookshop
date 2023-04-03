@@ -7,7 +7,7 @@ router.get("/create", productController.create);
 router.post("/store", productController.store);
 router.get("/:id/edit", productController.edit);
 router.post("/handle-form-actions", productController.handleFormActions);
-router.put("/:id", productController.update);
+router.put("/:id/update", productController.update);
 router.patch("/:id/restore", productController.restore);
 router.delete("/:id", productController.delete);
 router.delete("/:id/force", productController.forceDelete);

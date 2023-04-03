@@ -6,11 +6,15 @@ const mongooseDelete = require("mongoose-delete");
 const Product = new Schema(
   {
     name: { type: String, require: true },
+    author: { type: String, require: true },
+    year: { type: Number, require: true },
     description: { type: String, require: true },
     image: { type: String, require: true },
     price: { type: String, require: true },
     slug: { type: String, require: true, slug: "name" },
-    category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+    categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+    review_count: { type: Number, require: true, default: 0 },
+    average_score: { type: Number, require: true, default: 0 },
   },
   {
     timestamps: true,

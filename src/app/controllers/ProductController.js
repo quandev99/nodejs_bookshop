@@ -14,7 +14,7 @@ class ProductController {
   async show(req, res, next) {
     const product = await Product.findOne({ slug: req.params.slug }).lean();
     const productRelated = await Product.find({
-      category: product?.category,
+      categoryId: product?.categoryId,
     }).lean();
     const comments = await Comment.find({
       productId: product._id,
@@ -55,39 +55,62 @@ class ProductController {
   }
 
   //[Get] /products/:id/edit
-  edit(req, res, next) {
-    Product.findById(req.params.id)
-      .then((product) =>
-        res.render("admin/products/edit", {
-          product: mutipleToObject(product),
-        })
-      )
-      .catch(next);
+  async edit(req, res, next) {
+    const listCategories = await Category.find({}).lean();
+    const product = await Product.findById(req.params.id).lean();
+
+    res.status(200).render("admin/products/edit", {
+      categories: listCategories,
+      product: product,
+    });
   }
 
   //[Get] /products/:id/
-  update(req, res, next) {
-    const { name, description, image, category, price } = req.body;
-    if (!name || !description || !image || !price) {
+  async update(req, res, next) {
+    const { name, categoryId, author, year, description, image, price } =
+      req.body;
+    if (
+      !name ||
+      !categoryId ||
+      !author ||
+      !year ||
+      !description ||
+      !image ||
+      !price
+    ) {
       return res
         .status(400)
-        .json({ message: "Vui lòng nhập đầy đủ thông tin" });
+        .json({ success: false, message: "Vui lòng nhập đầy đủ thông tin" });
     }
-    Product.findByIdAndUpdate(
-      { _id: req.params.id },
-      { name: req.body.name },
-      { new: true }
-    )
-      .then((updatedProduct) => {
-        //Cập nhật thành công slug khi tên sản phẩm thay đổi
-        updatedProduct.slug = slugify(updatedProduct.name, { lower: true });
-        updatedProduct.save(); // Cập nhật thành công
-        res.redirect("/admin/me/stored/products");
-        // res.json({ data: updatedProduct, message: "Cập nhật thành công" });
-      })
-      .catch((err) => {
-        console.log(err);
+
+    try {
+      const newSlug = slugify(req.body.name, { lower: true });
+      const data = {
+        ...req.body,
+        slug: newSlug,
+      };
+      Product.updateOne(
+        {
+          _id: req.params.id,
+        },
+        data
+      ).then((data) => {
+        res.status(200).json({
+          data: data,
+          success: true,
+          message: "Cập nhật sản phẩm thành công",
+        });
       });
+      //Cập nhật thành công slug khi tên sản phẩm thay đổi
+      // updatedProduct.slug = slugify(updatedProduct.name, { lower: true });
+      // updatedProduct.save(req.body); // Cập nhật thành công
+      // res.redirect("/admin/me/stored/products");
+    } catch {
+      res.status(500).json({
+        success: false,
+        message: "Cập nhật sản phẩm thất bại!",
+      });
+    }
   }
 
   //[Delete] /products/:id/

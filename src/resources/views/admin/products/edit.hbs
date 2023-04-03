@@ -1,12 +1,8 @@
 <div class="container mt-4">
   <h3>Sửa Khóa Học</h3>
-  <form
-    class="mt-4"
-    method="post"
-    action="/admin/products/{{product._id}}?_method=put"
-  >
+  <form id="form-edit-product" class="mt-4">
     <div class="form-group">
-      <label for="name">Tên sảnn phẩm </label>
+      <label for="name"> Tên sản phẩm </label>
       <input
         type="text"
         class="form-control"
@@ -16,6 +12,55 @@
         placeholder="Enter name"
       />
     </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input
+        type="text"
+        class="form-control"
+        value="{{product.price}}"
+        id="price"
+        name="price"
+        placeholder="Enter price"
+      />
+    </div>
+    <div class="form-group">
+      <label for="author"> Tên tác giả </label>
+      <input
+        type="text"
+        class="form-control"
+        value="{{product.author}}"
+        id="author"
+        name="author"
+        placeholder="Enter author"
+      />
+    </div>
+    <div class="form-group">
+      <label for="year"> Năm phát hành </label>
+      <input
+        type="text"
+        class="form-control"
+        value="{{product.year}}"
+        id="year"
+        name="year"
+        placeholder="Enter year"
+      />
+    </div>
+    <select
+      class="form-control form-control-sm col-lg-3 checkbox-select-option"
+      name="categoryId"
+      id="categoryId"
+      required
+    >
+      <option class="text-center" value="">-- Lựa chọn danh mục --</option>
+      <option
+        selected
+        class="text-center"
+        value="{{product.categoryId}}"
+      >{{product.name}}</option>
+      {{#each categories}}
+        <option value="{{this._id}}">{{this.nameCategory}}</option>
+      {{/each}}
+    </select>
     <div class="form-group">
       <label for="image">Hình ảnh sản phẩm</label>
       <input
@@ -36,19 +81,28 @@
         placeholder="Enter description"
       >{{product.description}}</textarea>
     </div>
-    <div class="form-group">
-      <label for="price">Price</label>
-      <input
-        type="text"
-        class="form-control"
-        value="{{product.price}}"
-        id="price"
-        name="price"
-        placeholder="Enter price"
-      />
-    </div>
 
     <button type="submit" class="btn btn-primary">Lưu Lại sản phẩm</button>
     <button type="reset" class="btn btn-primary">Reset sản phẩm</button>
   </form>
 </div>
+
+<script>
+  const url = location.href; const id = url.split("/")[5];console.log(id) ;const
+  formEditProduct = document.querySelector("#form-edit-product");
+  formEditProduct.addEventListener("submit", async (e)=>{ e.preventDefault();
+  const name = document.querySelector("#name").value; const categoryId =
+  document.querySelector("#categoryId").value; const author =
+  document.querySelector("#author").value; const year =
+  document.querySelector("#year").value; const description =
+  document.querySelector("#description").value; const image =
+  document.querySelector("#image").value; const price =
+  document.querySelector("#price").value; const response = await
+  fetch(`/admin/products/${id}/update`,{ method: "PUT", headers: {
+  "Content-Type": "application/json" }, body:JSON.stringify ({name :name,
+  categoryId:categoryId, author:author, year:year, description:description,
+  image:image, price:price}), }); const data = await response.json();
+  if(data?.success === false){ return alert(data?.message) }else{
+  alert(data?.message) } location.href = "/admin/me/stored/products"; });
+
+</script>
