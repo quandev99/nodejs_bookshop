@@ -23,9 +23,12 @@
               <p style="font-size: 18px;">Năm XB:
                 <strong>{{product.year}}</strong></p>
             </div>
-            <div>
-              <h3>Lượt đánh giá: {{product.review_count}}</h3>
-              <h3>Trung bình số sao: {{product.average_score}}</h3>
+            <div class="review">
+              <span
+                class="d-none average_score"
+              >{{product.average_score}}</span>
+              <div class="average_score-star"></div>
+              <small>({{product.review_count}} lượt đánh giá)</small>
             </div>
             <div class="product-status mt-1">
               <strong class="text-success font-weight-normal">Còn hàng</strong>
@@ -270,7 +273,7 @@
           </div>
           <div class="row">
             <div class="col-xl-12 col-sm-6 bg-white">
-              <h4 class="text-center">Mời bạn đánh giá sản phẩm</h4>
+              <h4 class="text-center py-2">Mời bạn đánh giá sản phẩm</h4>
               <form id="form-comment">
                 <input
                   type="text"
@@ -331,12 +334,12 @@
 <script type="text/javascript">
   const url = location.href; const id = url.split("/")[5] ;const formComment =
   document.querySelector('#form-comment');
-  formComment.addEventListener('submit', async (e) =>{ e.preventDefault(); const
+  formComment.addEventListener('submit', async (e) =>{ e.preventDefault();const
   user = JSON.parse(localStorage.getItem("user")); const userName =
   user?.userName; const userImage = user?.avatar; const productId =
   document.querySelector("#productId").value; const rating =
   document.querySelector("#rating").value; const review =
-  document.querySelector("#review").value; const userNameCtrol =
+  document.querySelector("#review").value.trim(); const userNameCtrol =
   document.querySelector("#userName").value = userName; const userImageCtrol =
   document.querySelector("#userImage").value = userImage; const response = await
   fetch(`http://localhost:1999/comment/${productId}`,{ method: "POST", headers:
@@ -344,12 +347,18 @@
   review:review, productId:productId, userName:userNameCtrol,
   userImage:userImageCtrol, }), }); const data = await response.json();
   if(data.success === true){ alert(data.message); return location.href
-  =`http://localhost:1999/admin/products/${id}`; }else{ return
-  alert(data.message); } }) ; ratings = document.querySelectorAll('.rating');
-  [...ratings].forEach((item) => { const listRating = item.nextElementSibling;
-  const parsedRating = parseInt(item.textContent.trim()); let stars = ""; for
-  (let i = 0; i < parsedRating; i++) { stars += `<i class="text-danger fa
-  fa-star"></i>`; } for (let i = parsedRating; i < 5; i++) { stars += `<i
-  class="text-muted fa fa-star"></i>`; } listRating.innerHTML = stars; });
+  =`http://localhost:1999/admin/products/${id}`; }else{
+  alert(data?.message);return; } }) ; ratings =
+  document.querySelectorAll('.rating'); [...ratings].forEach((item) => { const
+  listRating = item.nextElementSibling; const parsedRating =
+  parseInt(item.textContent.trim()); let stars = ""; for (let i = 0; i <
+  parsedRating; i++) { stars += `<i class="text-danger fa fa-star"></i>`; } for
+  (let i = parsedRating; i < 5; i++) { stars += `<i class="text-muted fa
+  fa-star"></i>`; } listRating.innerHTML = stars; }); const averageScore =
+  document.querySelector(".average_score").textContent; const
+  averageaverageScoreStar = document.querySelector(".average_score-star");
+  console.log(averageScore); if(averageScore > 0){ let aaa = ""; for(let i = 0;
+  i < averageScore; i++){ aaa +=`<i class="text-danger fa fa-star"></i>`; }
+  averageaverageScoreStar.innerHTML = aaa; }
 
 </script>

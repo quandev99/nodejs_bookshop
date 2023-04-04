@@ -17,7 +17,7 @@ class ProductController {
       categoryId: product?.categoryId,
     }).lean();
     const comments = await Comment.find({
-      productId: product._id,
+      productId: product?._id,
     }).lean();
     const productRelatedWithoutCurrent = productRelated.filter(
       (p) => p.slug !== product.slug
@@ -37,6 +37,7 @@ class ProductController {
   create(req, res, next) {
     Category.find({}).then((categories) => {
       res.render("admin/products/create", {
+        layout: "admin",
         categories: mutipleMongooseToObject(categories),
       });
     });
@@ -60,6 +61,7 @@ class ProductController {
     const product = await Product.findById(req.params.id).lean();
 
     res.status(200).render("admin/products/edit", {
+      layout: "admin",
       categories: listCategories,
       product: product,
     });
@@ -96,6 +98,7 @@ class ProductController {
         data
       ).then((data) => {
         res.status(200).json({
+          layout: "admin",
           data: data,
           success: true,
           message: "Cập nhật sản phẩm thành công",

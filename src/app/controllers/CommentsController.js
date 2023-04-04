@@ -8,9 +8,9 @@ class CommentsController {
       // Check if the user has already submitted a comment for this product
       const existingComment = await Comment.findOne({ userName, productId });
       if (!userName) {
-        return res.status(500).json({
+        return res.status(400).json({
           success: false,
-          message: "Bạn phải đăng nhập mới được bình luận sản phẩm này",
+          message: "Bạn phải đăng nhập mới được đánh giá sản phẩm!",
         });
       }
       if (!rating || !review === "") {
@@ -35,11 +35,16 @@ class CommentsController {
         review,
       });
       await comment.save();
-      // Update product rating
+
+      const comments = await Comment.find({ productId });
+
+      const totalScore = comments.reduce((a, b) => a + b.rating, 0);
+      const reviewCount = comments.length;
+      const averageScore = totalScore / reviewCount;
+      // Cập nhật điểm đánh giá trung bình và số lần đánh giá cho sản phẩm
       const product = await Product.findById(productId);
-      product.average_score += rating;
-      product.review_count += 1;
-      product.rating = product.average_score / product.review_count;
+      product.average_score = Math.round(averageScore);
+      product.review_count = reviewCount;
       await product.save();
 
       return res.status(200).json({

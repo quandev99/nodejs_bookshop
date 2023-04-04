@@ -18,6 +18,7 @@ class MeController {
     Promise.all([productQuery, Product.countDocumentsDeleted()])
       .then(([products, deletedProduct]) => {
         res.render("admin/me/stored-products", {
+          layout: "admin",
           deletedProduct: deletedProduct,
           products: mutipleMongooseToObject(products),
         });
@@ -30,6 +31,7 @@ class MeController {
     Product.findDeleted({})
       .then((products) => {
         res.render("admin/me/trash-products", {
+          layout: "admin",
           products: mutipleMongooseToObject(products),
         });
       })
@@ -41,6 +43,7 @@ class MeController {
     Category.find({}).then((categories) => {
       // res.json({ Category: category });
       res.render("admin/me/stored-categories", {
+        layout: "admin",
         categories: mutipleMongooseToObject(categories),
       });
     });

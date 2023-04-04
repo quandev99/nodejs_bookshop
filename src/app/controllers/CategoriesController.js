@@ -34,6 +34,7 @@ class CategoriesController {
       .then((data) => {
         return res.status(200).json({
           success: true,
+          layout: "admin",
           message: "Thêm danh mục thành công!",
         });
       })
@@ -54,6 +55,7 @@ class CategoriesController {
     Category.findById(req.params.id)
       .then((categories) =>
         res.render("admin/categories/edit", {
+          layout: "admin",
           categories: mutipleToObject(categories),
         })
       )
@@ -88,6 +90,7 @@ class CategoriesController {
       .then(() => {
         res.status(200).json({
           success: true,
+          layout: "admin",
           message: "Cập nhật danh mục thành công!",
         });
       })

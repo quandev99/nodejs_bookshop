@@ -61,6 +61,7 @@ class AuthController {
     try {
       res.status(200).render("admin/me/list-users", {
         users: listAuth,
+        layout: "admin",
         message: "Hiển thị được toàn bộ tài khoản người dùng",
       });
     } catch {
@@ -72,6 +73,7 @@ class AuthController {
     try {
       res.status(200).render("admin/auth/edit", {
         user: viewEdit,
+        layout: "admin",
       });
     } catch {
       res.status(500).json({ message: "Lỗi hiển thị danh sách Users" });
@@ -104,6 +106,7 @@ class AuthController {
         res.status(200).json({
           success: true,
           data: user,
+          layout: "admin",
           message: "Cập nhật tài khoản thành công!",
         });
       })
