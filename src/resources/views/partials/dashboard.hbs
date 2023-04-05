@@ -1,18 +1,37 @@
-<div class="main col-xl-3">
-  <aside class="d-flex" style="background-color: #ecf1f7;">
-    <nav class="navbar">
-      <div class="">
-        <a class="navbar-brand" href="/admin"><img
-            src="https://c.mgg.vn/d/shopsach.com/img/logo_header.jpg"
-            alt="..."
+<div
+  class=""
+  style="position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    transition: all ease-in-out 0.5s;
+    z-index: 9997;
+    transition: all 0.5s;
+    background: #9cb8dc;
+    overflow-y: auto;"
+>
+  <aside class="w-100">
+    <nav class="navbar w-100">
+      <div class="navbar_dashboard w-100">
+        <a class="navbar-brand d-block" href="/admin"><img
+            src="/image/NguyenVietQuan.jpg"
+            alt=""
+            width="80"
+            height="80"
+            class="img-fluid rounded-circle"
           />
         </a>
-        <div class="feature-admin">
-          <ul class="navbar-list">
-            <li><a href="/admin">Trang chủ</a></li>
+        <div class="navbar_dashboard-list">
+          <ul class="nav d-flex flex-column">
+            <li><a href="/admin"><i class="fa-solid fa-house"></i>
+                Trang chủ</a></li>
             <li><a href="/admin/me/stored/products">Products</a></li>
             <li><a href="/admin/me/stored/categories">Category</a></li>
-            <li><a href="/admin/me/listUser">User</a></li>
+            <li><a href="/admin/me/listUser"><i
+                  class="fa-solid fa-users mr-2"
+                ></i>
+                User</a></li>
             <li><a href="/admin">Logout</a></li>
           </ul>
         </div>
@@ -20,3 +39,23 @@
     </nav>
   </aside>
 </div>
+
+{{! <nav class="col-md-2 bg-light sidebar">
+  <div class="sidebar-sticky">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a href="/admin">Trang chủ</a>
+      </li>
+      <li class="nav-item">
+        <a href="/admin/me/stored/products">Products</a>
+      </li>
+      <li class="nav-item">
+        <a href="/admin/me/stored/categories">Category</a>
+      </li>
+      <li class="nav-item">
+        <a href="/admin/me/listUser">User</a>
+      </li>
+
+    </ul>
+  </div>
+</nav> }}
