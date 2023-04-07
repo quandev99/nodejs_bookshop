@@ -10,13 +10,13 @@ const commentRoute = require("./comments");
 
 function route(app) {
   // app.post("/register", authRouter);
-  app.use("/admin/me", authRouter);
+  // app.use("/admin/me", authRouter);
   app.use("/admin/auth", authRouter);
   app.use("/admin/me", meRoute);
   app.use("/admin/products", productsRoute);
   app.use("/admin/categories", categoriesRoute);
-  app.use("/news", newsRoute);
   app.use("/admin", adminRoute);
+  app.use("/news", newsRoute);
   app.use("/categoryProduct", categoryProductRoute);
   app.use("/comment", commentRoute);
   app.use("/", siteRoute);

@@ -1,4 +1,7 @@
+require("dotenv").config();
 const Auth = require("../models/Auth");
+const jwt = require("jsonwebtoken");
+const verifyToken = require("../middlewares/auth");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -7,6 +10,24 @@ const {
   mutipleMongooseToObject,
   mutipleToObject,
 } = require("../../until/mongoose");
+
+// Generate ACCESS TOKEN
+const generateTokens = (user) => {
+  const accessToken = jwt.sign(
+    { id: user.id, admin: user.admin },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: "15s" }
+  );
+
+  const refreshToken = jwt.sign(
+    { id: user.id, admin: user.admin },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: "365d" }
+  );
+  return { accessToken, refreshToken };
+};
+
+let refreshTokens = [];
 
 class AuthController {
   //Post /register
@@ -48,6 +69,7 @@ class AuthController {
       });
     });
   }
+
   viewRegister(req, res) {
     res.render("admin/auth/register");
   }
@@ -56,18 +78,91 @@ class AuthController {
     res.render("admin/auth/loginUser");
   }
 
-  async listUser(req, res, next) {
-    const listAuth = await Auth.find({}).lean();
+  // POST /login
+  async login(req, res, next) {
     try {
-      res.status(200).render("admin/me/list-users", {
-        users: listAuth,
-        layout: "admin",
-        message: "Hiển thị được toàn bộ tài khoản người dùng",
+      const { userName, password } = req.body;
+      // kiểm tra xem các trường bắt buộc đã được nhập hay chưa
+      if (!userName || !password) {
+        return res
+          .status(400)
+          .json({ message: "Vui lòng nhập đầy đủ thông tin" });
+      }
+      // tìm user trong database dựa trên userName
+      const user = await Auth.findOne({ userName: userName });
+      if (!user) {
+        return res
+          .status(401)
+          .json({ success: false, message: "Sai tên đăng nhập" });
+      }
+      // so sánh password đã nhập với password trong database
+      const validPassword = await bcrypt.compare(password, user.password);
+      if (validPassword && user) {
+        const { accessToken, refreshToken } = generateTokens(user);
+        refreshTokens.push(refreshToken);
+        res.cookie("refreshToken", refreshToken),
+          {
+            httpOnly: true,
+            secure: false,
+            path: "/",
+            sameSite: "strict",
+          };
+
+        // đăng nhập thành công
+        const { password, ...others } = user._doc;
+        return res.status(200).json({
+          success: true,
+          message: "Đăng nhập thành công",
+          user: { ...others },
+          accessToken,
+        });
+      } else {
+        // đăng nhập thất bại
+        return res.status(401).json({
+          success: false,
+          message: "UserName hoặc mật khẩu không đúng",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Đăng nhập thất bại!" + error.message,
       });
-    } catch {
-      res.status(500).json({ message: "Lỗi hiển thị danh sách Users" });
     }
   }
+  //create new refresh token
+  async requestRefreshToken(req, res) {
+    //Take refresh token from server
+    const refreshToken = req.cookies.refreshToken;
+
+    console.log("tra lai du lieu " + refreshToken);
+    if (!refreshToken)
+      return res
+        .status(401)
+        .json({ message: "You are not allowed to access this page." });
+    if (!refreshTokens.includes(refreshToken)) {
+      return res
+        .status(403)
+        .json({ message: "You are not allowed to access this page1." });
+    }
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.status(403).json({ message: "Access denied." });
+      }
+      refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+      const { newAccessToken, newRefreshToken } = generateTokens(user);
+      refreshTokens.push(newRefreshToken);
+      console.log("-----------" + newRefreshToken);
+      res.cookie("refreshToken", newRefreshToken, {
+        httpOnly: true,
+        secure: false,
+        path: "/",
+        sameSite: "strict",
+      });
+      res.status(200).json({ accessToken: newAccessToken });
+    });
+  }
+
   async viewEdit(req, res, next) {
     const viewEdit = await Auth.findById(req.params.id).lean();
     try {
@@ -118,48 +213,16 @@ class AuthController {
       });
   }
 
-  // POST /login
-  login(req, res, next) {
-    const { userName, password } = req.body;
-    // kiểm tra xem các trường bắt buộc đã được nhập hay chưa
-    if (!userName || !password) {
-      return res
-        .status(400)
-        .json({ message: "Vui lòng nhập đầy đủ thông tin" });
-    }
-    // tìm user trong database dựa trên userName
-    Auth.findOne({ userName: userName }, (err, user) => {
-      if (err) {
-        return next(err);
-      }
-      if (!user) {
-        return res
-          .status(401)
-          .json({ message: "UserName hoặc mật khẩu không đúng" });
-      }
-      // so sánh password đã nhập với password trong database
-      bcrypt.compare(password, user.password, function (err, result) {
-        if (result === true) {
-          // đăng nhập thành công
-          req.user = user;
-          return res
-            .status(200)
-            .json({ message: "Đăng nhập thành công", user: user });
-        } else {
-          // đăng nhập thất bại
-          return res
-            .status(401)
-            .json({ message: "UserName hoặc mật khẩu không đúng" });
-        }
-      });
-    });
-  }
-
   //[Delete] /admin/auth/:id/deleteUser
-  deleteUser(req, res, next) {
-    Auth.deleteOne({ _id: req.params.id })
-      .then(() => res.redirect("back"))
-      .catch(next);
+  async deleteUser(req, res, next) {
+    try {
+      const id = req.params.id;
+      const userId = await Auth.deleteOne({ _id: id });
+      return res.status(200).redirect("back");
+      // .json({ success: false, message: "Đã xóa thành công user" });
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+    }
   }
 }
 module.exports = new AuthController();

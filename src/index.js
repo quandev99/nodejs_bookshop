@@ -4,8 +4,10 @@ const { engine } = require("express-handlebars");
 const morgan = require("morgan");
 var methodOverride = require("method-override");
 const { extname } = require("path");
+const cookieParser = require("cookie-parser");
 const app = express();
 const port = 1999;
+require("dotenv").config();
 // const SortMiddleware = require("./app/middlewares/SortMiddleware");
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -27,7 +29,7 @@ const route = require("./routes");
 const db = require("./config/db");
 // Connect to the db
 db.connect();
-
+app.use(cookieParser());
 //HTTP logger
 // app.use(morgan("combined"));
 // Template engine

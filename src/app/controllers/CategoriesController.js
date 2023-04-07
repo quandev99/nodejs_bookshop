@@ -10,7 +10,7 @@ const {
 
 class CategoriesController {
   create(req, res, next) {
-    res.render("admin/categories/create");
+    res.render("admin/categories/create", { layout: "admin" });
   }
   store(req, res, next) {
     const id = req.params.id;

@@ -62,17 +62,6 @@
             <a class="dropdown-item logoutBtn" href="#">Đăng Xuất</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="/admin">Admin</a>
-            <a class="dropdown-item" href="/admin/products/create">Đăng sản phẩm</a>
-            <a class="dropdown-item" href="/admin/categories/create">Thêm danh
-              mục sách</a>
-            <a class="dropdown-item" href="/admin/me/stored/products">Sản phẩm
-              Của Tôi</a>
-            <a class="dropdown-item" href="/admin/me/stored/categories">Danh mục
-              sách</a>
-            <a class="dropdown-item" href="/admin/me/listUser">Danh sách tài
-              khoản Của Tôi</a>
-            {{! <div class="dropdown-divider"></div> }}
-
           </div>
         </li>
       </ul>
@@ -104,10 +93,10 @@
   response.json(); console.log(data); }); const user =
   JSON.parse(localStorage.getItem("user")); const nameLogin =
   document.querySelector(".nameLogin"); const userAvatar =
-  document.querySelector(".user-avatar"); if(user?.userName && user?.avatar) {
-  const srcAvatarUser = user.avatar; nameLogin.textContent = user.userName ;
-  userAvatar.src = srcAvatarUser}; const logoutBtn =
-  document.querySelector(".logoutBtn"); logoutBtn &&
+  document.querySelector(".user-avatar"); if(user?.user.userName &&
+  user?.user.avatar) { const srcAvatarUser = user.user.avatar;
+  nameLogin.textContent = user.user.userName ; userAvatar.src = srcAvatarUser};
+  const logoutBtn = document.querySelector(".logoutBtn"); logoutBtn &&
   logoutBtn.addEventListener("click", (e) => { e.preventDefault();
   localStorage.clear(); alert("Dang xuat khoi the gioi thanh cong");
   location.href = "/" })

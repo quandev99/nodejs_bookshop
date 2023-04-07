@@ -1,10 +1,25 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
+const Auth = require("../models/Auth");
 const {
   mutipleMongooseToObject,
   mutipleToObject,
 } = require("../../until/mongoose");
 class MeController {
+  async listUser(req, res, next) {
+    const listUsers = await Auth.find({}).lean();
+    console.log(listUsers);
+    try {
+      res.status(200).render("admin/me/list-users", {
+        layout: "admin",
+        users: listUsers,
+        message: "Hiển thị được toàn bộ tài khoản người dùng",
+      });
+    } catch {
+      res.status(500).json({ message: "Lỗi hiển thị danh sách Users" });
+    }
+  }
+
   //Get /me/stored/products
   storedProducts(req, res, next) {
     let productQuery = Product.find({});

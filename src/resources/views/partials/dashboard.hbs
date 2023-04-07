@@ -8,27 +8,37 @@
     transition: all ease-in-out 0.5s;
     z-index: 9997;
     transition: all 0.5s;
-    background: #9cb8dc;
+    background: #fbfafa;
     overflow-y: auto;"
 >
   <aside class="w-100">
     <nav class="navbar w-100">
       <div class="navbar_dashboard w-100">
-        <a class="navbar-brand d-block" href="/admin"><img
-            src="/image/NguyenVietQuan.jpg"
-            alt=""
-            width="80"
-            height="80"
-            class="img-fluid rounded-circle"
-          />
-        </a>
+        <div class="navbar_dashboard-top">
+          <a class="navbar-brand text-center d-block" href="/admin"><img
+              src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+              class="rounded-circle"
+              style="width: 120px;"
+              alt="Avatar"
+            />
+          </a>
+          <h5 class="mb-2 text-center"><strong>Viết Quân</strong></h5>
+          <p class="text-muted text-center">Web designer
+            <span class="badge bg-primary">PRO</span>
+          </p>
+        </div>
         <div class="navbar_dashboard-list">
           <ul class="nav d-flex flex-column">
-            <li><a href="/admin"><i class="fa-solid fa-house"></i>
+            <li><a class="text-dark" href="/admin"><i
+                  class="fa-solid fa-house"
+                ></i>
                 Trang chủ</a></li>
-            <li><a href="/admin/me/stored/products">Products</a></li>
-            <li><a href="/admin/me/stored/categories">Category</a></li>
-            <li><a href="/admin/me/listUser"><i
+            <li><a href="/admin/me/stored/products">
+                <i class="fa-solid fa-grid-2"></i>Products</a></li>
+            <li><a href="/admin/me/stored/categories"><i
+                  class="fa-solid fa-rectangle-list"
+                ></i>Category</a></li>
+            <li><a href="/admin/me/stored/listUser"><i
                   class="fa-solid fa-users mr-2"
                 ></i>
                 User</a></li>
@@ -59,3 +69,9 @@
     </ul>
   </div>
 </nav> }}
+
+<script>
+  const user = JSON.parse(localStorage.getItem("user")); console.log(user);
+  if(user && !user.user.admin) { alert("Ban khong phai nguoi quan tri!");
+  location.href ="/"; }
+</script>

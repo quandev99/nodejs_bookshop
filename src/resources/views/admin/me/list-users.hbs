@@ -1,81 +1,99 @@
-<div class="container">
-  <form
-    class="mt-4"
-    name="container-form"
-    method="post"
-    action="/users/handle-form-actions"
-  >
-    <div>
-      <h3>Danh sách tài khoản</h3>
-      {{!-- <a href="/admin/me/trash/users">Rác ({{deleteduser}})</a> --}}
-      <div class="mt-4 d-flex flex-row align-items-center">
-
-      </div>
-    </div>
-
-    <table class="table mt-4">
-      <thead>
+<form action="" name="container-form">
+  <h3>Danh sách tài khoản</h3>
+  <div class="text-right mr-2 mb-2">
+    <a class="btn btn-primary btn-xl ms-3" href="/admin/auth/viewRegister">
+      <i class="fa fa-plus"></i>
+    </a>
+  </div>
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>#</th>
+        <th>STT</th>
+        <th>Name</th>
+        <th>User Name</th>
+        <th>Role</th>
+        <th>CreatedAt</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users}}
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Stt</th>
-          <th scope="col">Tên tài khoản
-          </th>
-          <th scope="col">Email</th>
-          <th scope="col">Hình ảnh</th>
-          <th scope="col">Role
-          </th>
-          <th scope="col">Thời Gian Tạo
-          </th>
-          </th>
-          <th scope="col">Thời Gian Tạo
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each users}}
-          <tr>
-            <td>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  name="userIds[]"
-                  value="{{this._id}}"
-                />
+          <td>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="userIds[]"
+                value="{{this._id}}"
+              />
+            </div>
+            <th scope="row">{{sum @index 1}}</th>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <img
+                src="{{this.avatar}}"
+                alt=""
+                style="width: 45px; height: 45px"
+                class="rounded-circle"
+              />
+              <div class="ms-3 ml-2">
+                <p class="fw-bold mb-1">{{this.fullName}}</p>
+                <p class="text-muted mb-0">{{this.email}}</p>
               </div>
-              <th scope="row">{{sum @index 1}}</th>
-            </td>
-            <td>{{this.fullName}}</td>
-            <td>{{this.email}}</td>
-            <td class="" style="width: 100px;height:100px"><img class="img-fluid"  style="width: 100%;height:100%" src="{{this.avatar}}" style="" alt="" /></td>
-            <td>{{this.role}}</td>
-            <td>{{this.createdAt}}</td>
-            <td>
-              <a
-                href="/admin/auth/{{this._id}}/viewEdit"
-                class="btn btn-link"
-              >Sửa</a>
-              <a
-                href=""
-                data-id="{{this._id}}"
-                class="btn btn-link"
-                data-toggle="modal"
-                data-target="#delete-user-modal"
-              >Xóa</a>
-            </td>
-          </tr>
-        {{else}}
-          <tr>
-            <td colspan="5" class="text-center">Danh sách tài khoản chưa có
-              thành viên
-              <a href="/users/create">Đăng Danh sách tài khoản</a>
-            </td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </form>
-</div>
+            </div>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{this.userName}}</p>
+            <p class="text-muted mb-0">IT department</p>
+          </td>
+          <td>
+            <span
+              class="badge badge-success rounded-pill d-inline"
+            >{{this.role}}</span>
+          </td>
+          <td class="createdAt">{{this.createdAt}}</td>
+          <td>
+            <a
+              href="/admin/auth/{{this._id}}/viewEdit"
+              class="btn btn-link btn-sm btn-rounded bg-primary text-white"
+            ><i class="far fa-edit"></i></a>
+            <a
+              href="/admin/auth/{{this._id}}/deleteUser"
+              data-id="{{this._id}}"
+              class="btn btn-link btn-sm btn-rounded bg-danger text-white"
+              data-toggle="modal"
+              data-target="#delete-user-modal"
+            ><i class="far fa-trash-alt"></i></a>
+          </td>
+        </tr>
+      {{else}}
+        <tr>
+          <td colspan="5" class="text-center">Danh sách tài khoản chưa có thành
+            viên
+            <a href="/users/create">Đăng Danh sách tài khoản</a>
+          </td>
+        </tr>
+      {{/each}}
+
+    </tbody>
+    <script>
+      const formatDate = (dateString) => { const date = new Date(dateString);
+      const day = String(date.getDate()).padStart(2, '0'); const month =
+      String(date.getMonth() + 1).padStart(2, '0'); const year =
+      String(date.getFullYear()); const hours =
+      String(date.getHours()).padStart(2, '0'); const minutes =
+      String(date.getMinutes()).padStart(2, '0'); return
+      `${day}/${month}/${year} - ${hours} giờ : ${minutes} phút`; }; const
+      createdAtElements = document.querySelectorAll(".createdAt"); for (let i =
+      0; i < createdAtElements.length; i++) { const formattedDate =
+      formatDate(createdAtElements[i].textContent);
+      createdAtElements[i].innerText = formattedDate; }
+    </script>
+  </table>
+</form>
 {{! Confirm delete user }}
 <!-- Modal -->
 <div
@@ -103,11 +121,7 @@
         Bạn có chắc chắn muốn xóa sản phẩm này không?
       </div>
       <div class="modal-footer">
-        <button
-          id="btn-delete-user"
-          type="button"
-          class="btn btn-danger"
-        >Xóa bỏ</button>
+        <button id="btn-delete-user" type="button" class="btn btn-danger">Xóa bỏ</button>
         <button
           type="button"
           class="btn btn-primary"
@@ -123,15 +137,14 @@
 
 </form>
 <script type="module">
-  document.addEventListener('DOMContentLoaded', function(){ var userId; var deleteForm = document.forms["delete-user-form"]; var containerForm =
+  document.addEventListener('DOMContentLoaded', function(){ var userId; var
+  deleteForm = document.forms["delete-user-form"]; var containerForm =
   document.forms['container-form'] ;var btnDeleteUser =
   document.getElementById('btn-delete-user'); var checkboxAll =
   $('#checkbox-all');var userItemCheckbox = $('.form-check-input'); var
   checkAllSubmitBtn = $('.check-all-submit-btn');
   $('#delete-user-modal').on('show.bs.modal', function (event) { var button =
   $(event.relatedTarget); userId = button.data('id') ; }) ;
-  btnDeleteUser.onclick = function(){ deleteForm.action = "/admin/auth/" + userId +
-  "/deleteUser?_method=delete" ; deleteForm.submit();} 
-  ;
-  });
+  btnDeleteUser.onclick = function(){ deleteForm.action = "/admin/auth/" +
+  userId + "/deleteUser?_method=delete" ; deleteForm.submit();} ; });
 </script>
