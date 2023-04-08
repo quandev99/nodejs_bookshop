@@ -8,7 +8,6 @@ const {
 class MeController {
   async listUser(req, res, next) {
     const listUsers = await Auth.find({}).lean();
-    console.log(listUsers);
     try {
       res.status(200).render("admin/me/list-users", {
         layout: "admin",

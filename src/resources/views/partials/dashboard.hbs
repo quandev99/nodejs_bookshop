@@ -49,29 +49,3 @@
     </nav>
   </aside>
 </div>
-
-{{! <nav class="col-md-2 bg-light sidebar">
-  <div class="sidebar-sticky">
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a href="/admin">Trang chủ</a>
-      </li>
-      <li class="nav-item">
-        <a href="/admin/me/stored/products">Products</a>
-      </li>
-      <li class="nav-item">
-        <a href="/admin/me/stored/categories">Category</a>
-      </li>
-      <li class="nav-item">
-        <a href="/admin/me/listUser">User</a>
-      </li>
-
-    </ul>
-  </div>
-</nav> }}
-
-<script>
-  const user = JSON.parse(localStorage.getItem("user")); console.log(user);
-  if(user && !user.user.admin) { alert("Ban khong phai nguoi quan tri!");
-  location.href ="/"; }
-</script>

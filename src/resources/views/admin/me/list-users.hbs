@@ -52,7 +52,7 @@
           <td>
             <span
               class="badge badge-success rounded-pill d-inline"
-            >{{this.role}}</span>
+            >{{this.admin}}</span>
           </td>
           <td class="createdAt">{{this.createdAt}}</td>
           <td>
@@ -132,19 +132,8 @@
   </div>
 </div>
 
-{{! Delete hidden form  }}
-<form class="mt-4" name="delete-user-form" method="post">
 
 </form>
-<script type="module">
-  document.addEventListener('DOMContentLoaded', function(){ var userId; var
-  deleteForm = document.forms["delete-user-form"]; var containerForm =
-  document.forms['container-form'] ;var btnDeleteUser =
-  document.getElementById('btn-delete-user'); var checkboxAll =
-  $('#checkbox-all');var userItemCheckbox = $('.form-check-input'); var
-  checkAllSubmitBtn = $('.check-all-submit-btn');
-  $('#delete-user-modal').on('show.bs.modal', function (event) { var button =
-  $(event.relatedTarget); userId = button.data('id') ; }) ;
-  btnDeleteUser.onclick = function(){ deleteForm.action = "/admin/auth/" +
-  userId + "/deleteUser?_method=delete" ; deleteForm.submit();} ; });
+<script type="module" src="/js/admin/me/listUsers.js">
+
 </script>

@@ -1,6 +1,12 @@
 class AdminController {
   admin(req, res, next) {
-    res.render("admin/index", { layout: "admin" });
+    try {
+      return res
+        .status(200)
+        .render("admin", { success: true, layout: "admin" });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 module.exports = new AdminController();

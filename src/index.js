@@ -5,6 +5,7 @@ const morgan = require("morgan");
 var methodOverride = require("method-override");
 const { extname } = require("path");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const app = express();
 const port = 1999;
 require("dotenv").config();
@@ -15,6 +16,13 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(
   express.urlencoded({
     extended: true,
+  })
+);
+app.use(
+  cors({
+    origin: "http://localhost:1999",
+    credentials: true, //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
   })
 );
 app.use(express.json());

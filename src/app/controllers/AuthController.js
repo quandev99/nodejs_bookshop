@@ -11,7 +11,7 @@ const generateTokens = (user) => {
   const accessToken = jwt.sign(
     { id: user.id, admin: user.admin },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "30s" }
+    { expiresIn: "1h" }
   );
 
   const refreshToken = jwt.sign(
@@ -269,8 +269,9 @@ class AuthController {
     try {
       const id = req.params.id;
       const userId = await Auth.deleteOne({ _id: id });
-      return res.status(200).redirect("back");
-      // .json({ success: false, message: "Đã xóa thành công user" });
+      return res
+        .status(200)
+        .json({ success: true, message: "Đã xóa thành công user" });
     } catch (error) {
       res.status(500).json({ success: false, message: error.message });
     }

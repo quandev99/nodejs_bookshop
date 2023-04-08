@@ -4,7 +4,6 @@ class CommentsController {
   async submitComment(req, res, next) {
     // const productId = req.params.id;
     const { productId, userName, userImage, rating, review } = req.body;
-    console.log(req.body);
     try {
       // Check if the user has already submitted a comment for this product
       const existingComment = await Comment.findOne({ userName, productId });

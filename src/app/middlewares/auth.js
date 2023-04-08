@@ -8,13 +8,17 @@ const verifyToken = (req, res, next) => {
     const accessToken = token.split(" ")[1];
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
       if (err) {
-        return res.status(403).json("Token is not valid");
+        return res
+          .status(403)
+          .json({ message: "Token is not valid", success: false });
       }
       req.user = user;
       next();
     });
   } else {
-    return res.status(401).json("You're not authenticated");
+    return res
+      .status(401)
+      .json({ message: "You're not authenticated", success: false });
   }
 };
 const verifyTokenAndAdminAuth = (req, res, next) => {
@@ -22,7 +26,10 @@ const verifyTokenAndAdminAuth = (req, res, next) => {
     if (req.user.id == req.params.id || req.user.admin) {
       next();
     } else {
-      res.status(403).json("You are not allowed to delete this user!");
+      res.status(403).json({
+        message: "You are not allowed to delete this user!",
+        success: false,
+      });
     }
   });
 };
