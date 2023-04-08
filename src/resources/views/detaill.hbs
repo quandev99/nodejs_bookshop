@@ -274,7 +274,7 @@
           <div class="row">
             <div class="bg-white px-3 container">
               <h4 class="text-center py-2 col-xl-12">Mời bạn đánh giá sản phẩm</h4>
-              <form id="form-comment col-xl-12 ">
+              <form id="form-comment">
                 <input
                   type="text"
                   value="{{product._id}}"
@@ -331,45 +331,6 @@
   </section>
 </div>
 
-<script type="text/javascript">
-  const url = location.href; const id = url.split("/")[5] ;const formComment =
-  document.querySelector('#form-comment');
-  formComment?.addEventListener('submit', async (e) =>{ e.preventDefault();const
-  user = JSON.parse(localStorage.getItem("user")); const userName =
-  user?.userName; const userImage = user?.avatar; const productId =
-  document.querySelector("#productId").value; const rating =
-  document.querySelector("#rating").value; const review =
-  document.querySelector("#review").value.trim(); const userNameCtrol =
-  document.querySelector("#userName").value = userName; const userImageCtrol =
-  document.querySelector("#userImage").value = userImage; const response = await
-  fetch(`http://localhost:1999/comment/${productId}`,{ method: "POST", headers:
-  {"Content-Type": "application/json" }, body:JSON.stringify({ rating:rating,
-  review:review, productId:productId, userName:userNameCtrol,
-  userImage:userImageCtrol, }), }); const data = await response.json();
-  if(data.success === true){ alert(data.message); return location.href
-  =`http://localhost:1999/admin/products/${id}`; }else{
-  alert(data?.message);return; } }) ; ratings =
-  document.querySelectorAll('.rating'); [...ratings].forEach((item) => { const
-  listRating = item.nextElementSibling; const parsedRating =
-  parseInt(item.textContent.trim()); let stars = ""; for (let i = 0; i <
-  parsedRating; i++) { stars += `<i class="text-danger fa fa-star"></i>`; } for
-  (let i = parsedRating; i < 5; i++) { stars += `<i class="text-muted fa
-  fa-star"></i>`; } listRating.innerHTML = stars; }); const averageScore =
-  document.querySelector(".average_score").textContent; function starRating(
-  averageScore, maxRating ) { const fullStars = Math.round(averageScore); const
-  halfStar = averageScore - fullStars >= 0.5; const emptyStars = maxRating -
-  fullStars - (halfStar ? 1 : 0); const stars = []; for (let i = 0; i <
-  fullStars; i++) { const star = document.createElement("i");
-  star.classList.add("fa", "fa-star"); star.setAttribute("key", `star-${i}`);
-  stars.push(star); } if (halfStar) { const halfStar =
-  document.createElement("i"); halfStar.classList.add("fa", "fa-star-half-alt");
-  halfStar.setAttribute("key", "half-star"); stars.push(halfStar); } for (let i
-  = 0; i < emptyStars; i++) { const star = document.createElement("i");
-  star.classList.add("fa", "fa-star"); star.setAttribute("key",
-  `empty-star-${i}`); star.style.opacity = "0.3"; stars.push(star); } const
-  starsDiv = document.createElement("div");
-  starsDiv.classList.add("stars","text-danger"); stars.forEach((star) =>
-  starsDiv.appendChild(star)); return starsDiv; }; const averageScoreStar =
-  document.querySelector(".average_score-star");
-  averageScoreStar.appendChild(starRating(averageScore ,5));
+<script type="text/javascript" src="/js/detaill.js">
+
 </script>

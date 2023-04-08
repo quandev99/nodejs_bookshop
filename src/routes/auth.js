@@ -11,7 +11,8 @@ router.post("/register", AuthController.register);
 router.get("/viewRegister", AuthController.viewRegister);
 router.get("/viewLogin", AuthController.viewLogin);
 router.post("/login", AuthController.login);
-router.post("/refreshToken", AuthController.requestRefreshToken);
+router.post("/logOut", verifyToken, AuthController.logOut);
+router.post("/refreshToken", AuthController.createNewRefreshToken);
 router.delete(
   "/:id/deleteUser",
   verifyTokenAndAdminAuth,

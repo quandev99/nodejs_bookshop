@@ -6,17 +6,12 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-const {
-  mutipleMongooseToObject,
-  mutipleToObject,
-} = require("../../until/mongoose");
-
 // Generate ACCESS TOKEN
 const generateTokens = (user) => {
   const accessToken = jwt.sign(
     { id: user.id, admin: user.admin },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "15s" }
+    { expiresIn: "30s" }
   );
 
   const refreshToken = jwt.sign(
@@ -120,7 +115,7 @@ class AuthController {
         // đăng nhập thất bại
         return res.status(401).json({
           success: false,
-          message: "UserName hoặc mật khẩu không đúng",
+          message: "Tài khoản hoặc mật khẩu không đúng",
         });
       }
     } catch (error) {
@@ -130,38 +125,94 @@ class AuthController {
       });
     }
   }
-  //create new refresh token
-  async requestRefreshToken(req, res) {
-    //Take refresh token from server
-    const refreshToken = req.cookies.refreshToken;
 
-    console.log("tra lai du lieu " + refreshToken);
-    if (!refreshToken)
-      return res
-        .status(401)
-        .json({ message: "You are not allowed to access this page." });
+  //POST /LogOut
+  logOut = async (req, res, next) => {
+    res.clearCookie("refreshToken");
+    refreshTokens = refreshTokens.filter(
+      (token) => token !== req.cookies.refreshToken
+    );
+    return res.status(200).json({
+      success: true,
+      message: "Đăng xuất thành công!",
+    });
+  };
+
+  //create new refresh token
+
+  createNewRefreshToken = async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) {
+      return res.status(401).json("You're not authenticated");
+    }
     if (!refreshTokens.includes(refreshToken)) {
-      return res
-        .status(403)
-        .json({ message: "You are not allowed to access this page1." });
+      return res.status(403).json("Refresh token is not valid");
     }
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
       if (err) {
-        return res.status(403).json({ message: "Access denied." });
+        return res.json(401).json(err);
       }
       refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-      const { newAccessToken, newRefreshToken } = generateTokens(user);
+      const newAccessToken = jwt.sign(
+        {
+          id: user._id,
+          admin: user.admin,
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "1d" }
+      );
+      const newRefreshToken = jwt.sign(
+        {
+          id: user._id,
+          admin: user.admin,
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: "30d" }
+      );
       refreshTokens.push(newRefreshToken);
-      console.log("-----------" + newRefreshToken);
       res.cookie("refreshToken", newRefreshToken, {
         httpOnly: true,
         secure: false,
         path: "/",
         sameSite: "strict",
       });
-      res.status(200).json({ accessToken: newAccessToken });
+      res.status(200).json({
+        accessToken: newAccessToken,
+      });
     });
-  }
+  };
+
+  //create new refresh token
+  // async requestRefreshToken(req, res) {
+  //   //Take refresh token from server
+  //   const refreshToken = req.cookies && req.cookies.refreshToken;
+  //   console.log("tra lai du lieu " + refreshToken);
+  //   if (!refreshToken)
+  //     return res
+  //       .status(401)
+  //       .json({ message: " You are not allowed to access this page." });
+  //   if (!refreshTokens.includes(refreshToken)) {
+  //     return res
+  //       .status(403)
+  //       .json({ message: "You are not allowed to access this page1." });
+  //   }
+  //   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+  //     if (err) {
+  //       console.log(err);
+  //       // return res.status(403).json({ message: "Access denied." });
+  //     }
+  //     refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+  //     const { newAccessToken, newRefreshToken } = generateTokens(user);
+  //     refreshTokens.push(newRefreshToken);
+  //     res.cookie("refreshToken", newRefreshToken, {
+  //       httpOnly: true,
+  //       secure: false,
+  //       path: "/",
+  //       sameSite: "strict",
+  //     });
+  //     res.status(200).json({ accessToken: newAccessToken });
+  //   });
+  // }
 
   async viewEdit(req, res, next) {
     const viewEdit = await Auth.findById(req.params.id).lean();

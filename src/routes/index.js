@@ -9,8 +9,6 @@ const categoryProductRoute = require("./categoryProduct");
 const commentRoute = require("./comments");
 
 function route(app) {
-  // app.post("/register", authRouter);
-  // app.use("/admin/me", authRouter);
   app.use("/admin/auth", authRouter);
   app.use("/admin/me", meRoute);
   app.use("/admin/products", productsRoute);
