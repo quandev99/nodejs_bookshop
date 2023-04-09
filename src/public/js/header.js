@@ -29,9 +29,8 @@ logoutBtn &&
     location.href = "/";
   });
 
-////-----------------
-
 document.addEventListener("DOMContentLoaded", async function () {
+  ////-----------------
   const admin = document.getElementById("admin");
   admin.addEventListener("click", async (e) => {
     e.preventDefault();
