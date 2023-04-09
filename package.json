@@ -41,6 +41,7 @@
     "mongoose": "^6.0.0",
     "mongoose-delete": "^0.5.4",
     "mongoose-slug-generator": "^1.0.4",
+    "node-fetch": "^3.3.1",
     "slugify": "^1.6.5",
     "speakingurl": "^14.0.1",
     "type": "^2.7.2"

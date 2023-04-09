@@ -30,13 +30,12 @@ logoutBtn &&
   });
 
 document.addEventListener("DOMContentLoaded", async function () {
-  ////-----------------
   const admin = document.getElementById("admin");
   admin.addEventListener("click", async (e) => {
     e.preventDefault();
     const data = JSON.parse(localStorage.getItem("user"));
     const accessToken = data?.accessToken;
-    console.log("accessToken", accessToken); // đã sửa để sử dụng dấu phẩy thay vì ghép chuỗi
+    console.log("accessToken", accessToken);
     if (!accessToken) {
       alert("Access token not found. Please log in.");
       location.href = "/";
@@ -46,8 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     await fetch("http://localhost:1999/admin", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`, // đã sửa để sử dụng "Authorization" thay vì "token"
+        token: `Bearer ${accessToken}`,
       },
     });
     location.href = "/admin";
