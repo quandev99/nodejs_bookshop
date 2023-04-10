@@ -1,6 +1,6 @@
 require("dotenv").config();
-const Auth = require("../models/Auth");
 const jwt = require("jsonwebtoken");
+const Auth = require("../models/Auth");
 const verifyToken = require("../middlewares/auth");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
@@ -108,7 +108,7 @@ class AuthController {
         return res.status(200).json({
           success: true,
           message: "Đăng nhập thành công",
-          user: { ...others },
+          ...others,
           accessToken,
         });
       } else {

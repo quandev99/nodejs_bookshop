@@ -9,7 +9,6 @@ const cors = require("cors");
 const app = express();
 const port = 1999;
 require("dotenv").config();
-// const SortMiddleware = require("./app/middlewares/SortMiddleware");
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -52,7 +51,7 @@ app.engine(
 );
 app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "resources", "views"));
-app.set("admin", path.join(__dirname, "resources", "views/admin/views"));
+// app.set("admin", path.join(__dirname, "resources", "views/admin/views"));
 app.set("env", "development");
 // Route init
 route(app);

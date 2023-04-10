@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
-const adminController = require("../app/controllers/AdminController.js");
 const {
   verifyToken,
   verifyTokenAndAdminAuth,
 } = require("../app/middlewares/auth.js");
+const adminController = require("../app/controllers/AdminController.js");
 
-router.get("/", verifyToken, adminController.admin);
+router.get("/", verifyTokenAndAdminAuth, adminController.admin);
 module.exports = router;

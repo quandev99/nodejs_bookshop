@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   let userId;
-  const user = JSON.parse(localStorage.getItem("user"));
-  const accessToken = user?.accessToken;
+  const data = JSON.parse(localStorage.getItem("user"));
+  const accessToken = data?.accessToken;
   const btnDeleteUser = document.getElementById("btn-delete-user");
 
   $("#delete-user-modal").on("show.bs.modal", function (event) {
@@ -20,12 +20,13 @@ document.addEventListener("DOMContentLoaded", function () {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`, // Thêm accessToken vào header Authorization
           },
-          body: JSON.stringify({ id: userId }),
+          // body: JSON.stringify({ id: userId }),
         }
       );
       const data = await response.json();
       if (data) {
         location.href = "/admin/me/stored/listUser";
+        return;
       } else {
         alert(data.message);
       }

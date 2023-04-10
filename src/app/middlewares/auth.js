@@ -1,31 +1,27 @@
 const jwt = require("jsonwebtoken");
-
+const session = require("express-session");
 require("dotenv").config();
 const verifyToken = (req, res, next) => {
-  //get token
-  const token = req.headers.token;
+  // const token = req.headers.Authorization;
+  const token = req.cookies.refreshToken;
+  console.log("Token cua toi: " + token);
   if (token) {
-    //bearer fdsfasdfdsfsdfasdf
-    const accessToken = token.split(" ")[1];
-    jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    // const accessToken = token.split(" ")[1];
+    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
       if (err) {
-        return res
-          .status(403)
-          .json({ message: "Token is not valid", success: false });
+        return res.status(403).json("Token is not valid");
       }
       req.user = user;
-      console.log("asdasdkagdkjadhad:" + token);
       next();
     });
   } else {
-    return res
-      .status(401)
-      .json({ message: "You're not authenticated", success: false });
+    return res.status(401).json("You're not authenticated");
   }
 };
+
 const verifyTokenAndAdminAuth = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user.admin) {
+    if (req.user.admin === true) {
       next();
     } else {
       res.status(403).json({

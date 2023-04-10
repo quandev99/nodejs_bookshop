@@ -1,11 +1,9 @@
 class AdminController {
   admin(req, res, next) {
     try {
-      return res
-        .status(200)
-        .render("admin", { success: true, layout: "admin" });
+      return res.status(200).render("admin", { layout: "admin" });
     } catch (error) {
-      console.log(error);
+      console.log("Lỗi hiện thị trang Admin!" + error);
     }
   }
 }

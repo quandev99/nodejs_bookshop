@@ -7,7 +7,10 @@ const authRouter = require("./auth");
 const adminRoute = require("./admin");
 const categoryProductRoute = require("./categoryProduct");
 const commentRoute = require("./comments");
-
+const {
+  verifyToken,
+  verifyTokenAndAdminAuth,
+} = require("../app/middlewares/auth.js");
 function route(app) {
   app.use("/admin/auth", authRouter);
   app.use("/admin/me", meRoute);

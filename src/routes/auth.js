@@ -13,7 +13,7 @@ router.get("/viewLogin", AuthController.viewLogin);
 router.post("/login", AuthController.login);
 router.post("/logOut", AuthController.logOut);
 router.post("/refreshToken", AuthController.createNewRefreshToken);
-router.delete("/:id/deleteUser", AuthController.deleteUser);
+router.delete("/:id/deleteUser", verifyToken, AuthController.deleteUser);
 router.get("/:id/viewEdit", AuthController.viewEdit);
 router.put("/:id/updateUser", AuthController.updateUser);
 module.exports = router;
