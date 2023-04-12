@@ -35,6 +35,30 @@ averageScoreStar.appendChild(starRating(averageScore, 5));
 // Đánh giá số sao và bình luận sản phẩm
 
 const formComment = document.querySelector("#form-comment");
+/////// đánh giá số sao
+let selectedStars = 0;
+
+function rate(stars) {
+  selectedStars = stars;
+  displayResult();
+}
+function displayResult() {
+  const resultElement = document.getElementById("rating");
+  resultElement.innerHTML = selectedStars;
+  const starElements = document.getElementsByClassName("star");
+  for (let i = 0; i < starElements.length; i++) {
+    if (i < selectedStars) {
+      starElements[i].classList.add("selected-star");
+    } else {
+      starElements[i].classList.remove("selected-star");
+    }
+  }
+}
+
+// Mặc định hiển thị 5 sao đỏ
+window.onload = function () {
+  rate(5);
+};
 formComment?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const url = location.href;
@@ -43,7 +67,7 @@ formComment?.addEventListener("submit", async (e) => {
   const userName = user?.user?.userName;
   const userImage = user?.user?.avatar;
   const productId = document.querySelector("#productId").value;
-  const rating = document.querySelector("#rating").value;
+  const rating = document.querySelector("#rating").textContent;
   const review = document.querySelector("#review").value.trim();
   const userNameCtr = (document.querySelector("#userName").value = userName);
   const userImageCtr = (document.querySelector("#userImage").value = userImage);
@@ -84,3 +108,19 @@ ratings = document.querySelectorAll(".rating");
   }
   listRating.innerHTML = stars;
 });
+
+/// Hiển thị thời gian người dùng bình luận
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = String(date.getFullYear());
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${day}/${month}/${year} - lúc ${hours} giờ : ${minutes} phút`;
+};
+const createdAtElements = document.querySelectorAll(".createdAt");
+for (let i = 0; i < createdAtElements.length; i++) {
+  const formattedDate = formatDate(createdAtElements[i].textContent);
+  createdAtElements[i].innerText = formattedDate;
+}

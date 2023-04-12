@@ -1,3 +1,18 @@
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = String(date.getFullYear());
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${day}/${month}/${year} - lúc ${hours} giờ : ${minutes} phút`;
+};
+const createdAtElements = document.querySelectorAll(".createdAt");
+for (let i = 0; i < createdAtElements.length; i++) {
+  const formattedDate = formatDate(createdAtElements[i].textContent);
+  createdAtElements[i].innerText = formattedDate;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   let userId;
   const data = JSON.parse(localStorage.getItem("user"));

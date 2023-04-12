@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const unidecode = require("unidecode");
 const Category = require("../models/Category");
 const {
   mutipleMongooseToObject,
@@ -19,14 +20,25 @@ class SiteController {
     }
   }
   async searchProducts(req, res, next) {
-    try {
-      const productSearch = await Product.find().lean();
-      return res.render("index", {
-        data: productSearch,
+    await Product.find({}).then((data) => {
+      const q = req.query.search;
+      const matchedBook = mutipleMongooseToObject(data).filter((item) => {
+        return item.name.toLowerCase().startsWith(q.toLowerCase());
       });
-    } catch (err) {
-      res.status(500).json({ message: "Hien thi bi lỗi rồi" });
-    }
+      res.render("category-product", {
+        products: matchedBook,
+      });
+    });
+    /////
+    // const tim = req.query.search; // Giá trị tìm kiếm từ client
+    // const timChuoi = unidecode(tim.toLowerCase()); // Chuẩn hóa chuỗi về chữ thường
+    // const bookSearch = await Product.find({
+    //   name: { $regex: timChuoi, $options: "i" },
+    // }).lean();
+    // const categories = await Category.find({}).lean();
+    // res.render("category-product", {
+    //   products: bookSearch,
+    // });
   }
 
   // search(req, res) {

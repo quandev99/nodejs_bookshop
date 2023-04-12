@@ -1,13 +1,14 @@
 <div class="">
   <form
-    class="mt-4"
+    class="mt-4 pl-3"
     name="container-form"
     method="post"
     action="/admin/products/handle-form-actions"
   >
     <div>
       <h3>Sản phẩm của tôi</h3>
-      <a href="/admin/me/trash/products">Rác ({{deletedProduct}})</a>
+      <a href="/admin/me/trash/products"><i class="fa-solid fa-trash"></i>
+        ({{deletedProduct}})</a>
       <div class="mt-4 d-flex flex-row align-items-center">
         <div class="form-check">
           <input
@@ -44,16 +45,16 @@
     <table class="table mt-4">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Sl</th>
-          <th scope="col">Tên Sản phẩm
+          <th>#</th>
+          <th>Sl</th>
+          <th>Name
             <a href="?_sort&column=name&type=desc"><i
                 class="fa-solid fa-sort"
               ></i></a></th>
-          <th scope="col">Giá
-          </th>
-          <th scope="col" colspan="2">Thời Gian Tạo
-          </th>
+          <th>Image</th>
+          <th>Price</th>
+          <th>CreatedAt</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -70,21 +71,27 @@
               </div>
               <th scope="row">{{sum @index 1}}</th>
             </td>
-            <td>{{this.name}}</td>
-            <td>{{this.price}}</td>
-            <td>{{this.createdAt}}</td>
+            <td style="width: 300px;">{{this.name}}</td>
+            <td><img
+                src="{{this.image}}"
+                style="width: 80px; height: 80px"
+                class="rounded"
+                alt=""
+              /></td>
+            <td class="price text-danger font-weight-bold">{{this.price}}</td>
+            <td class="createdAt">{{this.createdAt}}</td>
             <td>
               <a
                 href="/admin/products/{{this._id}}/edit"
-                class="btn btn-link"
-              >Sửa</a>
+                class="btn btn-link btn btn-link btn-sm btn-rounded bg-primary text-white"
+              ><i class="far fa-edit"></i></a>
               <a
                 href=""
                 data-id="{{this._id}}"
-                class="btn btn-link"
+                class="btn btn-link btn-sm btn-rounded bg-danger text-white"
                 data-toggle="modal"
                 data-target="#delete-product-modal"
-              >Xóa</a>
+              ><i class="far fa-trash-alt"></i></a>
             </td>
           </tr>
         {{else}}

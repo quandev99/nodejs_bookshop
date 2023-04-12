@@ -13,8 +13,10 @@ loginForm.addEventListener("submit", async (event) => {
   const data = await response.json();
   if (data.user) {
     localStorage.setItem("user", JSON.stringify(data));
+    console.log(data.user);
     alert(data.message);
     location.href = "/";
+    return;
   } else {
     alert(data.message);
   }

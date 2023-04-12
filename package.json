@@ -45,7 +45,8 @@
     "node-localstorage": "^2.2.1",
     "slugify": "^1.6.5",
     "speakingurl": "^14.0.1",
-    "type": "^2.7.2"
+    "type": "^2.7.2",
+    "unidecode": "^0.1.8"
   },
   "devDependencies": {
     "morgan": "^1.10.0",

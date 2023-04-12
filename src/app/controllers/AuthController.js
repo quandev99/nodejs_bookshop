@@ -77,6 +77,7 @@ class AuthController {
   async login(req, res, next) {
     try {
       const { userName, password } = req.body;
+
       // kiểm tra xem các trường bắt buộc đã được nhập hay chưa
       if (!userName || !password) {
         return res
@@ -108,7 +109,7 @@ class AuthController {
         return res.status(200).json({
           success: true,
           message: "Đăng nhập thành công",
-          ...others,
+          user: { ...others },
           accessToken,
         });
       } else {

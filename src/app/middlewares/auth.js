@@ -3,7 +3,7 @@ const session = require("express-session");
 require("dotenv").config();
 const verifyToken = (req, res, next) => {
   // const token = req.headers.Authorization;
-  const token = req.cookies.refreshToken;
+
   console.log("Token cua toi: " + token);
   if (token) {
     // const accessToken = token.split(" ")[1];

@@ -65,10 +65,16 @@
           </div>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0" id="submit-search-product">
+      <form
+        class="form-inline my-2 my-lg-0"
+        action="/searchProducts"
+        method="get"
+        id="submit-search-product"
+      >
         <input
           class="form-control mr-sm-2 search-product-input"
           type="search"
+          name="search"
           placeholder="Search"
           aria-label="Search"
         />

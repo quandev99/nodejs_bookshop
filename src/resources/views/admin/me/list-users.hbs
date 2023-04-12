@@ -1,11 +1,6 @@
-<form action="" name="container-form">
+
   <h3>Danh sách tài khoản</h3>
-  <div class="text-right mr-2 mb-2">
-    <a class="btn btn-primary btn-xl ms-3" href="/admin/auth/viewRegister">
-      <i class="fa fa-plus"></i>
-    </a>
-  </div>
-  <table class="table align-middle mb-0 bg-white">
+  <table class="table align-middle mb-0 bg-white table-hover table-responsive">
     <thead class="bg-light">
       <tr>
         <th>#</th>
@@ -77,23 +72,9 @@
           </td>
         </tr>
       {{/each}}
-
-    </tbody>
-    <script>
-      const formatDate = (dateString) => { const date = new Date(dateString);
-      const day = String(date.getDate()).padStart(2, '0'); const month =
-      String(date.getMonth() + 1).padStart(2, '0'); const year =
-      String(date.getFullYear()); const hours =
-      String(date.getHours()).padStart(2, '0'); const minutes =
-      String(date.getMinutes()).padStart(2, '0'); return
-      `${day}/${month}/${year} - ${hours} giờ : ${minutes} phút`; }; const
-      createdAtElements = document.querySelectorAll(".createdAt"); for (let i =
-      0; i < createdAtElements.length; i++) { const formattedDate =
-      formatDate(createdAtElements[i].textContent);
-      createdAtElements[i].innerText = formattedDate; }
-    </script>
+    </tbody>  
   </table>
-</form>
+
 {{! Confirm delete user }}
 <!-- Modal -->
 <div

@@ -1,15 +1,17 @@
 // const searchProduct = document.querySelector(".search-product-input");
 // const submitSearchProduct = document.querySelector("#submit-search-product");
-// submitSearchProduct.addEventListener("submit", async (e) => {
+// submitSearchProduct.addEventListener("click", async (e) => {
 //   e.preventDefault();
 //   const searchProductCtr = searchProduct.value;
 //   const response = await fetch("http://localhost:1999/searchProducts", {
 //     method: "GET",
 //     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(searchProductCtr),
 //   });
 //   const data = await response.json();
 //   console.log(data);
 // });
+
 // Hàm để xóa cookie với tên là "refreshToken"
 function deleteRefreshTokenCookie() {
   document.cookie =
