@@ -21,9 +21,9 @@ class SiteController {
   }
   async searchProducts(req, res, next) {
     await Product.find({}).then((data) => {
-      const q = req.query.search;
+      const nameCtr = req.query.search;
       const matchedBook = mutipleMongooseToObject(data).filter((item) => {
-        return item.name.toLowerCase().startsWith(q.toLowerCase());
+        return item.name.toLowerCase().startsWith(nameCtr.toLowerCase());
       });
       res.render("category-product", {
         products: matchedBook,
