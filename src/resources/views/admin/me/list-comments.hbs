@@ -1,19 +1,20 @@
-
-  <h3>Danh sách tài khoản</h3>
-  <table class="table align-middle mb-0 bg-white table-hover">
+<h3>Danh sách đánh giá bình luận</h3>
+<div class="row">
+  <table class="table align-middle mb-0 bg-white table-hover w-100">
     <thead class="bg-light">
       <tr>
-        <th>#</th>
-        <th>STT</th>
-        <th>Name</th>
-        <th>User Name</th>
-        <th>Role</th>
-        <th>CreatedAt</th>
-        <th>Actions</th>
+        <th colspan="col">#</th>
+        <th colspan="col">STT</th>
+        <th colspan="col">Name</th>
+        <th colspan="col">User Name</th>
+        <th colspan="col">Comment</th>
+        <th colspan="col">Rating</th>
+        <th colspan="col">Comment Time</th>
+        <th colspan="col">Actions</th>
       </tr>
     </thead>
     <tbody>
-      {{#each users}}
+      {{#each comments}}
         <tr>
           <td>
             <div class="form-check">
@@ -29,57 +30,48 @@
           <td>
             <div class="d-flex align-items-center">
               <img
-                src="{{this.avatar}}"
+                src="{{this.userImage}}"
                 alt=""
                 style="width: 45px; height: 45px"
                 class="rounded-circle"
               />
-              <div class="ms-3 ml-2">
-                <p class="fw-bold mb-1">{{this.fullName}}</p>
-                <p class="text-muted mb-0">{{this.email}}</p>
-              </div>
             </div>
           </td>
           <td>
             <p class="fw-normal mb-1">{{this.userName}}</p>
-            <p class="text-muted mb-0">IT department</p>
+            <p class="text-muted mb-0">User</p>
           </td>
+          <td><p>{{this.review}}</p></td>
           <td>
             <span
               class="badge badge-success rounded-pill d-inline"
-            >{{this.admin}}</span>
+            >{{this.rating}}</span>
           </td>
           <td class="createdAt">{{this.createdAt}}</td>
-          <td>
+          <td class="text-center">
             <a
-              href="/admin/auth/{{this._id}}/viewEdit"
-              class="btn btn-link btn-sm btn-rounded bg-primary text-white"
-            ><i class="far fa-edit"></i></a>
-            <a
-              href="/admin/auth/{{this._id}}/deleteUser"
+              href="/comment/{{this._id}}/deleteComment"
               data-id="{{this._id}}"
               class="btn btn-link btn-sm btn-rounded bg-danger text-white"
               data-toggle="modal"
-              data-target="#delete-user-modal"
+              data-target="#delete-comment-modal"
             ><i class="far fa-trash-alt"></i></a>
           </td>
         </tr>
       {{else}}
         <tr>
-          <td colspan="5" class="text-center">Danh sách tài khoản chưa có thành
-            viên
-            <a href="/users/create">Đăng Danh sách tài khoản</a>
+          <td colspan="5" class="text-center">Danh sách đánh giá chưa có!
           </td>
         </tr>
       {{/each}}
-    </tbody>  
+    </tbody>
   </table>
-
-{{! Confirm delete user }}
+</div>
+{{! Confirm delete comment }}
 <!-- Modal -->
 <div
   class="modal fade"
-  id="delete-user-modal"
+  id="delete-comment-modal"
   tabindex="-1"
   role="dialog"
   aria-labelledby="exampleModalLabel"
@@ -99,10 +91,11 @@
         </button>
       </div>
       <div class="modal-body">
-        Bạn có chắc chắn muốn xóa sản phẩm này không?
+        Bạn có chắc chắn muốn xóa bình luận này không?
       </div>
       <div class="modal-footer">
-        <button id="btn-delete-user" type="button" class="btn btn-danger">Xóa bỏ</button>
+        <button id="btn-delete-comment" type="button" class="btn btn-danger">Xóa
+          bỏ</button>
         <button
           type="button"
           class="btn btn-primary"
@@ -112,9 +105,4 @@
     </div>
   </div>
 </div>
-
-
-</form>
-<script type="module" src="/js/admin/me/listUsers.js">
-
-</script>
+<script src="/js/admin/me/listComments.js"></script>

@@ -1,4 +1,3 @@
-const Product = require("../models/Product");
 const Comment = require("../models/Comment");
 class CommentsController {
   async submitComment(req, res, next) {
@@ -58,5 +57,16 @@ class CommentsController {
       return next(error);
     }
   }
+  deleteComment = async (req, res, next) => {
+    const id = req.params.id;
+    const deleted = await Comment.deleteOne({ _id: id });
+    try {
+      return res
+        .status(200)
+        .json({ success: true, message: "Đã xóa thành công user" });
+    } catch (error) {
+      return res.status(500).json({ success: false, message: error.message });
+    }
+  };
 }
 module.exports = new CommentsController();

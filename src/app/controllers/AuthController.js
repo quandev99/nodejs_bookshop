@@ -274,7 +274,7 @@ class AuthController {
         .status(200)
         .json({ success: true, message: "Đã xóa thành công user" });
     } catch (error) {
-      res.status(500).json({ success: false, message: error.message });
+      return res.status(500).json({ success: false, message: error.message });
     }
   }
 }

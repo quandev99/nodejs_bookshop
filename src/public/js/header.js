@@ -42,7 +42,7 @@ admin.addEventListener("click", async (e) => {
   const data = JSON.parse(localStorage.getItem("user"));
   const accessToken = data?.accessToken;
 
-  if (!accessToken || data?.user.admin === false) {
+  if (!accessToken || !data?.user.admin) {
     alert("Bạn không có quyền vào trang này!.");
     // location.href = "/";
     return;

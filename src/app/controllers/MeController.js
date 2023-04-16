@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
+const Comment = require("../models/Comment");
 const Auth = require("../models/Auth");
 const {
   mutipleMongooseToObject,
@@ -62,5 +63,14 @@ class MeController {
       });
     });
   }
+
+  // [GET] admin/me/stored/comments
+  listComments = async (req, res, next) => {
+    const getComments = await Comment.find({}).lean();
+    res.status(200).render("admin/me/list-comments", {
+      layout: "admin",
+      comments: getComments,
+    });
+  };
 }
 module.exports = new MeController();
