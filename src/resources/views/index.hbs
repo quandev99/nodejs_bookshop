@@ -1,4 +1,4 @@
-<div id="demo" class="carousel slide container" data-ride="carousel">
+<div id="demo" class="carousel slide container-fluid" data-ride="carousel">
   <!-- Indicators -->
   <ul class="carousel-indicators">
     <li data-target="#demo" data-slide-to="0" class="active"></li>
@@ -12,7 +12,7 @@
       <img
         src="https://cdn0.fahasa.com/media/magentothem/banner7/Platinum_minhlong_ide_840x320.jpg"
         alt="Los Angeles"
-        width="1200"
+        width="100%"
         height="500"
       />
     </div>
@@ -20,7 +20,7 @@
       <img
         src="https://cdn0.fahasa.com/media/magentothem/banner7/Management_mainbanner_T4_840x320_1.jpg"
         alt="Chicago"
-        width="1200"
+        width="100%"
         height="500"
       />
     </div>
@@ -28,7 +28,7 @@
       <img
         src="https://cdn0.fahasa.com/media/magentothem/banner7/FahasaT4_Bo1_Slide_840x320_3.jpg"
         alt="New York"
-        width="1200"
+        width="100%"
         height="500"
       />
     </div>
@@ -43,7 +43,7 @@
   </a>
 </div>
 
-<div class="container">
+<div class="container-fluid">
   <div class="my-4">
     <h1
       class="bg-success text-white px-3 rounded-top"
@@ -58,7 +58,7 @@
             <div class="card-img-top p-4 h-100">
               <a href="admin/products/{{this.slug}}" class="d-block">
                 <img
-                  class="img-fluid h-100 w-100"
+                  class="img-fluid h-100 w-100 mx-auto d-block"
                   src="{{this.image}}"
                   alt="{{this.image}}"
                 />
@@ -69,7 +69,10 @@
                 <h5 class="card-title text-truncate">{{this.name}}</h5>
               </a>
               <p class="card-text text-truncate">{{this.description}}</p>
-              <p class="card-text text-danger text-right price">{{this.price}}
+              <p class="card-text text-danger text-right">{{formatNumber
+                  this.price
+                }}
+                đ
               </p>
             </div>
             <div class="card-footer">

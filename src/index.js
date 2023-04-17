@@ -46,6 +46,9 @@ app.engine(
     extname: ".hbs",
     helpers: {
       sum: (a, b) => a + b,
+      formatNumber(price) {
+        return price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
     },
   })
 );

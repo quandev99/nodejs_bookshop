@@ -34,7 +34,7 @@
               <strong class="text-success font-weight-normal">Còn hàng</strong>
             </div>
             <div class="product-price mt-2">
-              <p class="text-danger">{{product.price}} đ</p>
+              <p class="text-danger">{{formatNumber product.price}} đ</p>
             </div>
             <div
               class="product-buy text-center rounded rounded-5 mt-1 mb-2 bg-danger text-white col-lg-4"
@@ -136,7 +136,9 @@
                       <p
                         class="card-text text-truncate"
                       >{{this.description}}</p>
-                      <p class="card-text text-danger text-right">{{this.price}}
+                      <p class="card-text text-danger text-right">{{formatNumber
+                          this.price
+                        }}
                         đ</p>
                     </div>
                     <div class="card-footer">

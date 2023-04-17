@@ -1,7 +1,3 @@
-const price = document.querySelectorAll(".price").textContent;
-
-const formattedData1 = Number(price).toLocaleString("en-US");
-
 document.addEventListener("DOMContentLoaded", function () {
   // Hiển thị thời gian tạo
   const formatDate = (dateString) => {

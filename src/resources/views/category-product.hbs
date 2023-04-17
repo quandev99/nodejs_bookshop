@@ -45,7 +45,9 @@
                   <h5 class="card-title text-truncate">{{this.name}}</h5>
                 </a>
                 <p class="card-text text-truncate">{{this.description}}</p>
-                <p class="card-text text-danger text-right">{{this.price}}
+                <p class="card-text text-danger text-right">{{formatNumber
+                    this.price
+                  }}
                   đ</p>
               </div>
               <div class="card-footer">
@@ -78,7 +80,9 @@
                   <h5 class="card-title text-truncate">{{this.name}}</h5>
                 </a>
                 <p class="card-text text-truncate">{{this.description}}</p>
-                <p class="card-text text-danger text-right">{{this.price}}
+                <p class="card-text text-danger text-right">{{formatNumber
+                    this.price
+                  }}
                   đ</p>
               </div>
               <div class="card-footer">
