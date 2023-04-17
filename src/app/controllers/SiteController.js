@@ -41,8 +41,8 @@ class SiteController {
     // });
   }
 
-  // search(req, res) {
-  //   res.render("search");
-  // }
+  introduce(req, res) {
+    return res.render("introduce");
+  }
 }
 module.exports = new SiteController();

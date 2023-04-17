@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container-fluid p-2">
   <style>
-    .list-category a{text-decoration: none; color: #000;} .list-category
-    a:hover{ color: #087b39; }
+    .list-category a{display: block; color: #000;} .list-category a:hover{
+    color: #087b39; }
   </style>
-  <div class="mt-4 mb-5">
+  <div class="p-4">
     <div class="row">
       <div
         class="category col-xl-2 col-md-3 col-sm-3 col-xs-12 bg-light rounded"
@@ -26,28 +26,30 @@
           <div
             class="col-xl-3 col-md-4 d-flex align-items-stretch pagination-circle"
           >
-            <div class="card mb-3">
-              <div class="card-image p-4 bg-image h-100">
+            <div class="card mb-3 w-100">
+              <div class="card-image w-100" style="height: 250px;">
                 <a
                   href="admin/products/{{this.slug}}"
-                  class="d-block rounded-lg lift lift-lg"
+                  class="d-block rounded-lg lift lift-lg h-100 nav-link p-2"
                 >
                   <img
-                    class="img-fluid h-100"
+                    class="img-fluid h-100 w-100 d-block"
                     src="{{this.image}}"
                     alt="{{this.image}}"
                   />
 
                 </a>
               </div>
-              <div class="card-body card">
-                <a href="/admin/products/{{this.slug}}">
-                  <h5 class="card-title text-truncate">{{this.name}}</h5>
+              <div class="card-body p-0">
+                <a href="/admin/products/{{this.slug}}" class="nav-link p-2">
+                  <p
+                    style="font-size: 16px;"
+                    class="card-title text-truncate text-dark"
+                  >{{this.name}}</p>
                 </a>
-                <p class="card-text text-truncate">{{this.description}}</p>
-                <p class="card-text text-danger text-right">{{formatNumber
-                    this.price
-                  }}
+                <p
+                  class="card-text text-danger text-right font-weight-bold p-2"
+                >{{formatNumber this.price}}
                   đ</p>
               </div>
               <div class="card-footer">
@@ -59,30 +61,32 @@
         {{/each}}
         {{#each lproducts}}
           <div
-            class="col-md-6 col-lg-3 col-xl-3 d-flex align-items-stretch pagination-circle"
+            class="col-xl-3 col-md-4 d-flex align-items-stretch pagination-circle"
           >
-            <div class="card">
-              <div class="card-image p-4 bg-image h-100">
+            <div class="card mb-3">
+              <div class="card-image" style="height: 250px;">
                 <a
-                  href="/admin/products/{{this.slug}}"
-                  class="d-block rounded-lg lift lift-lg"
+                  href="admin/products/{{this.slug}}"
+                  class="d-block rounded-lg lift lift-lg h-100 nav-link p-2"
                 >
                   <img
-                    class="img-fluid rounded-lg"
+                    class="img-fluid h-100 w-100 d-block"
                     src="{{this.image}}"
                     alt="{{this.image}}"
                   />
 
                 </a>
               </div>
-              <div class="card-body card">
-                <a href="admin/products/{{this.slug}}">
-                  <h5 class="card-title text-truncate">{{this.name}}</h5>
+              <div class="card-body">
+                <a href="/admin/products/{{this.slug}}" class="nav-link p-0">
+                  <h5
+                    style="font-size: 18px;"
+                    class="card-title text-truncate text-dark"
+                  >{{this.name}}</h5>
                 </a>
-                <p class="card-text text-truncate">{{this.description}}</p>
-                <p class="card-text text-danger text-right">{{formatNumber
-                    this.price
-                  }}
+                <p
+                  class="card-text text-danger text-right font-weight-bold p-2"
+                >{{formatNumber this.price}}
                   đ</p>
               </div>
               <div class="card-footer">

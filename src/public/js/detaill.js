@@ -83,10 +83,10 @@ formComment?.addEventListener("submit", async (e) => {
     }),
   });
   const data = await response.json();
-  if (data.success === true) {
+  if (data.success) {
     alert(data.message);
-    console.log(productId);
-    return (location.href = `http://localhost:1999/admin/products/${id}`);
+    location.href = `http://localhost:1999/admin/products/${id}`;
+    return;
   } else {
     alert(data?.message);
     return;
@@ -124,3 +124,41 @@ for (let i = 0; i < createdAtElements.length; i++) {
   const formattedDate = formatDate(createdAtElements[i].textContent);
   createdAtElements[i].innerText = formattedDate;
 }
+
+// Mua hàng
+
+let soLuong = 1; // Giá trị mặc định của số lượng là 1
+
+// Hàm thực hiện việc giảm số lượng sản phẩm
+const truSoLuong = () => {
+  if (soLuong > 1) {
+    // Giảm số lượng nếu số lượng > 1
+    soLuong--;
+    capNhatSoLuong();
+  }
+};
+
+// Hàm thực hiện việc tăng số lượng sản phẩm
+const congSoLuong = () => {
+  soLuong++; // Tăng số lượng lên 1
+  capNhatSoLuong();
+};
+
+// Hàm cập nhật giá trị số lượng lên giao diện
+const capNhatSoLuong = () => {
+  document.getElementById("soLuong").value = soLuong;
+};
+
+// Hàm kiểm tra số lượng không được nhập số âm
+const kiemTraSoAm = () => {
+  if (soLuong < 1) {
+    soLuong = 1;
+    capNhatSoLuong();
+  }
+};
+
+// Hàm xử lý sự kiện khi giá trị input thay đổi
+const inputOnChange = (event) => {
+  soLuong = event.target.value;
+  kiemTraSoAm();
+};

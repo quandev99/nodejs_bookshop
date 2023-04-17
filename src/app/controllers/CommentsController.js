@@ -1,23 +1,25 @@
 const Comment = require("../models/Comment");
+const Product = require("../models/Product");
 class CommentsController {
   async submitComment(req, res, next) {
     // const productId = req.params.id;
     const { productId, userName, userImage, rating, review } = req.body;
+    if (!rating < 0 || !review === "") {
+      return res.status(500).json({
+        success: false,
+        message: "Bạn phải nhập các đánh giá!",
+      });
+    }
+    // Check if the user has already submitted a comment for this product
+    const existingComment = await Comment.findOne({ userName, productId });
     try {
-      // Check if the user has already submitted a comment for this product
-      const existingComment = await Comment.findOne({ userName, productId });
       if (!userName) {
         return res.status(400).json({
           success: false,
           message: "Bạn phải đăng nhập mới được đánh giá sản phẩm!",
         });
       }
-      if (!rating || !review === "") {
-        return res.status(500).json({
-          success: false,
-          message: "Bạn phải nhập các đánh giá!",
-        });
-      }
+
       if (existingComment) {
         return res.status(400).json({
           success: false,

@@ -54,30 +54,34 @@
     <div class="row">
       {{#each products}}
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mt-3 mb-lg-2">
-          <div class="card">
-            <div class="card-img-top p-4 h-100">
+          <div class="card h-100 w-100" style="">
+            <div class="card-img-top p-2" style="height:260px">
               <a href="admin/products/{{this.slug}}" class="d-block">
                 <img
-                  class="img-fluid h-100 w-100 mx-auto d-block"
+                  class="img-fluid h-100 w-100 d-block img-thumbnail"
                   src="{{this.image}}"
                   alt="{{this.image}}"
                 />
               </a>
             </div>
             <div class="card-body">
-              <a href="admin/products/{{this.slug}}">
+              <a
+                href="admin/products/{{this.slug}}"
+                class="nav-link text-dark d-block"
+              >
                 <h5 class="card-title text-truncate">{{this.name}}</h5>
               </a>
-              <p class="card-text text-truncate">{{this.description}}</p>
-              <p class="card-text text-danger text-right">{{formatNumber
-                  this.price
-                }}
+              <p
+                class="card-text text-danger text-right text-bold"
+              >{{formatNumber this.price}}
                 đ
               </p>
             </div>
-            <div class="card-footer">
-              <button href="#" class="btn btn-primary bg-danger border-0">Mua
-                sản phẩm</button>
+            <div class="card-footer text-center">
+              <a
+                href="admin/products/{{this.slug}}"
+                class="btn btn-primary bg-danger border-0"
+              >Mua sản phẩm</a>
             </div>
           </div>
         </div>
