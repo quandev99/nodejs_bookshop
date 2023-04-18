@@ -32,12 +32,8 @@ function starRating(averageScore, maxRating) {
 const averageScoreStar = document.querySelector(".average_score-star");
 averageScoreStar.appendChild(starRating(averageScore, 5));
 
-// Đánh giá số sao và bình luận sản phẩm
-
-const formComment = document.querySelector("#form-comment");
 /////// đánh giá số sao
 let selectedStars = 0;
-
 function rate(stars) {
   selectedStars = stars;
   displayResult();
@@ -59,6 +55,9 @@ function displayResult() {
 window.onload = function () {
   rate(5);
 };
+
+// Đánh giá số sao và bình luận sản phẩm
+const formComment = document.querySelector("#form-comment");
 formComment?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const url = location.href;
@@ -162,3 +161,108 @@ const inputOnChange = (event) => {
   soLuong = event.target.value;
   kiemTraSoAm();
 };
+
+// // Add-to-cart
+// document.addEventListener("DOMContentLoaded", function () {
+//   const addToCart = document.getElementById("add-to-cart");
+//   const productId = addToCart?.getAttribute("data-product-id");
+//   const quantity = document.getElementById("soLuong");
+//   const priceText = document.getElementById("price").textContent;
+//   const image = document.getElementById("image").src;
+//   const title = document.getElementById("title").textContent;
+
+//   function chuyenDoiGiaTriTien(priceText) {
+//     var giaTriTienKhongDauPhay = priceText.replace(/,/g, "");
+//     giaTriTienKhongDauPhay = giaTriTienKhongDauPhay.replace(/đ/g, "");
+//     var giaTriSoNguyen = parseInt(giaTriTienKhongDauPhay);
+//     return giaTriSoNguyen;
+//   }
+
+//   var priceNumber = chuyenDoiGiaTriTien(priceText);
+
+//   addToCart?.addEventListener("click", (e) => {
+//     e.preventDefault();
+//     const quantityNumber = parseInt(quantity.value);
+//     const orderCookie = document.cookie.replace(
+//       /(?:(?:^|.*;\s*)order\s*\=\s*([^;]*).*$)|^.*$/,
+//       "$1"
+//     );
+//     let order;
+//     if (orderCookie) {
+//       order = JSON.parse(orderCookie);
+//       order.quantity += quantityNumber;
+//     } else {
+//       order = {
+//         id: productId,
+//         title: title,
+//         image: image,
+//         price: priceNumber,
+//         quantity: quantityNumber,
+//       };
+//     }
+//     document.cookie = `order=${JSON.stringify(order)}; expires=${new Date(
+//       Date.now() + 86400e3
+//     ).toUTCString()}; path=/`;
+//     alert(`Bạn đã thêm ${quantityNumber} sản phẩm thành công !`);
+//     location.href = "/order";
+//   });
+// });
+
+// Add-to-cart
+document.addEventListener("DOMContentLoaded", function () {
+  const addToCart = document.getElementById("add-to-cart");
+  const productId = addToCart?.getAttribute("data-product-id");
+  const quantity = document.getElementById("soLuong");
+  const priceText = document.getElementById("price").textContent;
+  const image = document.getElementById("image").src;
+  const title = document.getElementById("title").textContent;
+
+  function chuyenDoiGiaTriTien(priceText) {
+    var giaTriTienKhongDauPhay = priceText.replace(/,/g, "");
+    giaTriTienKhongDauPhay = giaTriTienKhongDauPhay.replace(/đ/g, "");
+    var giaTriSoNguyen = parseInt(giaTriTienKhongDauPhay);
+    return giaTriSoNguyen;
+  }
+
+  var priceNumber = chuyenDoiGiaTriTien(priceText);
+
+  addToCart?.addEventListener("click", (e) => {
+    e.preventDefault();
+    const quantityNumber = parseInt(quantity.value);
+    const orderCookie = document.cookie.replace(
+      /(?:(?:^|.*;\s*)order\s*\=\s*([^;]*).*$)|^.*$/,
+      "$1"
+    );
+    let order;
+    if (orderCookie) {
+      order = JSON.parse(orderCookie);
+      const productIndex = order.findIndex((p) => p.id === productId);
+      if (productIndex !== -1) {
+        order[productIndex].quantity += quantityNumber;
+      } else {
+        order.push({
+          id: productId,
+          title: title,
+          image: image,
+          price: priceNumber,
+          quantity: quantityNumber,
+        });
+      }
+    } else {
+      order = [
+        {
+          id: productId,
+          title: title,
+          image: image,
+          price: priceNumber,
+          quantity: quantityNumber,
+        },
+      ];
+    }
+    document.cookie = `order=${JSON.stringify(order)}; expires=${new Date(
+      Date.now() + 86400e3
+    ).toUTCString()}; path=/`;
+    alert(`Bạn đã thêm ${quantityNumber} sản phẩm thành công !`);
+    location.href = "/order";
+  });
+});

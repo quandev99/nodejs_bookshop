@@ -5,6 +5,7 @@
         <div class="col-xs-12 col-sm-4">
           <img
             class="card-img-top img-fluid rounded-lg border border-warning rounded"
+            id="image"
             style="max-width: 100%;"
             src="{{product.image}}"
             title="sản phẩm"
@@ -15,7 +16,7 @@
         </div>
         <div class="col-xs-12 col-sm-5">
           <div class="infor-product">
-            <h1 class="" style="font-size: 24px;">{{product.name}}</h1>
+            <h1 id="title" style="font-size: 24px;">{{product.name}}</h1>
             <span class="brand" style="margin-bottom:5px"></span>
             <div class="product-att p-2 border-top">
               <p style="font-size: 18px;line-height:1.5em;">Tác giả:
@@ -34,7 +35,9 @@
               <strong class="text-success font-weight-normal">Còn hàng</strong>
             </div>
             <div class="product-price mt-2">
-              <p class="text-danger">{{formatNumber product.price}} đ</p>
+              <p id="price" class="text-danger">{{formatNumber
+                  product.price
+                }}đ</p>
             </div>
             <div class="add-cart">
               <div class="so-luong-container">
@@ -54,9 +57,12 @@
             <div
               class="product-buy text-center rounded rounded-5 mt-1 mb-2 bg-danger text-white col-lg-4"
             >
-              <button class="btn btn-danger btn-buy-now">Mua Ngay</button>
+              <button
+                data-product-id="{{product._id}}"
+                id="add-to-cart"
+                class="btn btn-danger btn-buy-now"
+              >Mua Ngay</button>
             </div>
-            <p>{{product.categories.nameCategory}}</p>
           </div>
 
         </div>
@@ -123,6 +129,7 @@
                 <div
                   class="col-md-6 col-lg-3 d-flex align-items-stretch mt-3 mb-lg-2"
                 >
+
                   <div class="card h-100" style="">
                     <div class="card-img-top p-2" style="height:260px">
                       <a href="/admin/products/{{this.slug}}" class="d-block">
@@ -351,6 +358,7 @@
   </section>
 </div>
 
+<!-- Tập tin JavaScript của bạn -->
 <script type="text/javascript" src="/js/detaill.js">
 
 </script>
