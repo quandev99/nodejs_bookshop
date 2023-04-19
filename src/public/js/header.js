@@ -1,16 +1,26 @@
-// const searchProduct = document.querySelector(".search-product-input");
-// const submitSearchProduct = document.querySelector("#submit-search-product");
-// submitSearchProduct.addEventListener("click", async (e) => {
-//   e.preventDefault();
-//   const searchProductCtr = searchProduct.value;
-//   const response = await fetch("http://localhost:1999/searchProducts", {
-//     method: "GET",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(searchProductCtr),
-//   });
-//   const data = await response.json();
-//   console.log(data);
-// });
+// Lấy dữ liệu từ cookie
+const orderCookie = document.cookie.replace(
+  /(?:(?:^|.*;\s*)order\s*=\s*([^;]*).*$)|^.*$/,
+  "$1"
+);
+let orderList;
+if (orderCookie) {
+  orderList = JSON.parse(orderCookie);
+} else {
+  orderList = [];
+}
+const CartShop = document.querySelector("#total-quantity");
+let cartQuantity = [];
+for (let i = 0; i < orderList.length; i++) {
+  const element = orderList[i];
+  const cart = element.quantity;
+  cartQuantity.push(cart);
+}
+let totalCart = 0;
+for (const item of cartQuantity) {
+  totalCart += item;
+}
+CartShop.textContent = totalCart;
 
 // Hàm để xóa cookie với tên là "refreshToken"
 function deleteRefreshTokenCookie() {

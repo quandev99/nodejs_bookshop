@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     orderList = [];
   }
 
-  // Hiển thị dữ liệu trong bảng HTML
+  // Hiển thị danh sách order sản phẩm của mình đã chọn trong bảng HTML
   const tableBody = document
     .querySelector(".list-order")
     .getElementsByTagName("div")[0];
@@ -39,8 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
       </div>
       <div class="d-flex align-items-center">
-        <p>Sl:<span class="font-weight-bold ml-2">${order.quantity} </span></p> 
-        <p> X <span class="fw-normal  text-danger font-weight-bold">${order.price} </span>đ</p> 
+        <p>Sl:<span class="font-weight-bold mx-2">${order.quantity} </span></p> 
+        <p>X <span class="fw-normal  text-danger font-weight-bold">${order.price} </span>đ</p> 
       </div>    
     `;
     tableBody.appendChild(row);
@@ -53,39 +53,46 @@ document.addEventListener("DOMContentLoaded", function () {
     arr.push(sum);
   }
   let sum = 0;
-  for (const so of arr) {
-    sum += so;
+  for (const item of arr) {
+    sum += item;
   }
-  tagSumPrice.innerHTML = `
-        <td class="text-danger mr-2">Tổng số tiền: <span class="font-weight-bold text-danger">${sum}</span> đ</td>
-  `;
+  tagSumPrice.innerHTML = `<td class="text-danger mr-2">Tổng số tiền: <span class="font-weight-bold text-danger">${sum}</span> đ</td>`;
+
+  // Điền thông tin và checkout vào đơn hàng
   const button = document.querySelector("#button");
-  button?.addEventListener("click", () => {
+  button?.addEventListener("click", async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user?.user?._id;
+    const avatar = user?.user?.avatar;
+    const totalQuantity = document.getElementById("total-quantity").textContent;
     const userName = document.getElementById("userName").value;
     const email = document.getElementById("email").value;
     const phone = document.getElementById("phone").value;
     const address = document.getElementById("address").value;
     console.log("Value:" + userName + email + address + phone);
-    console.log(orderList);
-    axios
-      .post("/order/addCart", {
-        userId: "1213173",
-        userName: userName,
-        email: email,
-        address: address,
-        phone: phone,
-        products: orderList,
-        totalAmount: sum,
-      })
-      .then((response) => {
-        console.log(response.data); // Xử lý kết quả trả về từ server
-        if (response.data.success) {
-          alert(data.message);
-          return;
-        }
-      })
-      .catch((error) => {
-        console.error(error); // Xử lý lỗi nếu có
-      });
+    const data = await axios.post("/order/addCart", {
+      userId: userId,
+      userName: userName,
+      totalQuantity: totalQuantity,
+      avatar: avatar,
+      email: email,
+      address: address,
+      phone: phone,
+      products: orderList,
+      totalAmount: sum,
+    });
+    try {
+      if (data?.data?.success == true) {
+        alert(data?.data.message);
+        location.href = "/";
+        return;
+      } else {
+        alert(data?.data?.message);
+        location.href = "/";
+        return;
+      }
+    } catch {
+      console.error(error); // Xử lý lỗi nếu có
+    }
   });
 });

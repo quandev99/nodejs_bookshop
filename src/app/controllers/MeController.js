@@ -2,6 +2,7 @@ const Product = require("../models/Product");
 const Category = require("../models/Category");
 const Comment = require("../models/Comment");
 const Auth = require("../models/Auth");
+const Order = require("../models/Order");
 const {
   mutipleMongooseToObject,
   mutipleToObject,
@@ -70,6 +71,13 @@ class MeController {
     res.status(200).render("admin/me/list-comments", {
       layout: "admin",
       comments: getComments,
+    });
+  };
+  listOrders = async (req, res, next) => {
+    const getOrders = await Order.find({}).lean();
+    res.status(200).render("admin/me/list-orders", {
+      layout: "admin",
+      getOrders: getOrders,
     });
   };
 }

@@ -1,4 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-light">
+<nav
+  class="navbar navbar-expand-lg navbar-dark bg-light"
+  style="background: rgb(8,123,57) !important;"
+>
   <div class="container">
 
     <a class="navbar-brand" href="/">
@@ -27,17 +30,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link text-dark" href="/categoryProduct">Sản phẩm</a>
+          <a class="nav-link text-white" href="/categoryProduct">Sản phẩm</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="/introduce">Giới thiệu</a>
+          <a class="nav-link text-white" href="/introduce">Giới thiệu</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="/order">Liên hệ</a>
+          <a class="nav-link text-white" href="/contact">Liên hệ</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown d-flex">
           <a
             class="nav-link dropdown-toggle"
             href="#"
@@ -55,7 +58,18 @@
               border-radius: 50px;
               margin-right: 10px;"
             />
-            <span class="namelogin text-dark">Quandev99</span>
+            <span class="namelogin text-white">Quandev99</span>
+          </a>
+          <a class="text-dark nav-link position-relative d-block" href="/order">
+            <i
+              style=" font-size:20px; font-weight:bold;"
+              class="fa-solid fa-cart-shopping p-3 rounded-circle text-center text-white"
+            ></i>
+            <span
+              id="total-quantity"
+              style="right:8px;top:8px; font-size:13px; font-weight:bold;"
+              class="d-block px-2 quantity-products rounded-circle bg-danger text-white text-center position-absolute"
+            >0</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="/admin/auth/viewLogin">Đăng Nhập</a>
@@ -64,6 +78,7 @@
             <a class="dropdown-item" id="admin" href="/admin">Admin</a>
           </div>
         </li>
+
       </ul>
       <form
         class="form-inline my-2 my-lg-0"
@@ -80,7 +95,7 @@
         />
 
         <button
-          class="btn btn-outline-success my-2 my-sm-0"
+          class="btn btn-outline-success my-2 my-sm-0 bg-white"
           type="submit"
         >Search</button>
       </form>

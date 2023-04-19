@@ -1,0 +1,107 @@
+<h3>Chi tiết đơn hàng</h3>
+<div class="text-right mr-2 mb-2">
+  <a class="btn btn-primary btn-xl ms-3" href="/admin/me/stored/listOrders">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
+</div>
+<div class="row p-4">
+  <table class="table align-middle mb-0 bg-white table-hover w-100">
+    <thead class="bg-light">
+      <tr>
+        <th colspan="col">#</th>
+        <th colspan="col">STT</th>
+        <th colspan="col">ProductId</th>
+        <th colspan="col">Title</th>
+        <th colspan="col">Image</th>
+        <th colspan="col">Quantity</th>
+        <th colspan="col">Price</th>
+        <th colspan="col">CreatedAt</th>
+        <th colspan="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each OrderDetail}}
+        <tr>
+          <td>
+            <th scope="row">{{sum @index 1}}</th>
+          </td>
+          <td style="width: 50px"><p class="">{{this.productId}}</p></td>
+          <td>
+            <p class="fw-normal mb-1">{{this.title}}</p>
+          </td>
+          <td>
+            <img
+              src="{{this.image}}"
+              alt=""
+              style="width: 45px; height: 45px"
+              class="rounded"
+            />
+          </td>
+          <td>
+            <span class="">{{this.quantity}}</span>
+          </td>
+          <td>
+            <span class="font-weight-bold text-danger">{{formatNumber
+                this.price
+              }}
+              đ</span>
+          </td>
+          <td class="createdAt">{{this.createdAt}}</td>
+          <td class="text-center">
+            <a
+              href="/comment/{{this._id}}/deleteComment"
+              data-id="{{this._id}}"
+              class="btn btn-link btn-sm btn-rounded bg-danger text-white"
+              data-toggle="modal"
+              data-target="#delete-comment-modal"
+            ><i class="far fa-trash-alt"></i></a>
+          </td>
+        </tr>
+      {{else}}
+        <tr>
+          <td colspan="5" class="text-center">Chi tiết đơn hàng trống!
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+{{! Confirm delete comment }}
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="delete-comment-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cảnh báo</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa bình luận này không?
+      </div>
+      <div class="modal-footer">
+        <button id="btn-delete-comment" type="button" class="btn btn-danger">Xóa
+          bỏ</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/admin/me/listComments.js"></script>

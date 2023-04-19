@@ -183,38 +183,6 @@ class AuthController {
     });
   };
 
-  //create new refresh token
-  // async requestRefreshToken(req, res) {
-  //   //Take refresh token from server
-  //   const refreshToken = req.cookies && req.cookies.refreshToken;
-  //   console.log("tra lai du lieu " + refreshToken);
-  //   if (!refreshToken)
-  //     return res
-  //       .status(401)
-  //       .json({ message: " You are not allowed to access this page." });
-  //   if (!refreshTokens.includes(refreshToken)) {
-  //     return res
-  //       .status(403)
-  //       .json({ message: "You are not allowed to access this page1." });
-  //   }
-  //   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-  //     if (err) {
-  //       console.log(err);
-  //       // return res.status(403).json({ message: "Access denied." });
-  //     }
-  //     refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-  //     const { newAccessToken, newRefreshToken } = generateTokens(user);
-  //     refreshTokens.push(newRefreshToken);
-  //     res.cookie("refreshToken", newRefreshToken, {
-  //       httpOnly: true,
-  //       secure: false,
-  //       path: "/",
-  //       sameSite: "strict",
-  //     });
-  //     res.status(200).json({ accessToken: newAccessToken });
-  //   });
-  // }
-
   async viewEdit(req, res, next) {
     const viewEdit = await Auth.findById(req.params.id).lean();
     try {

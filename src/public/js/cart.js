@@ -11,8 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     orderList = [];
   }
+  // if (orderList === []) return (location.href = "/");
 
-  // Hiển thị dữ liệu trong bảng HTML
+  // Hiển thị danh sách order sản phẩm của mình đã chọn trong bảng HTML
   const tableBody = document
     .getElementById("cart-table")
     .getElementsByTagName("tbody")[0];
@@ -67,9 +68,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const sum = element.quantity * element.price;
     arr.push(sum);
   }
-  let sum = 0;
-  for (const so of arr) {
-    sum += so;
+  let totalAmount = 0;
+  for (const item of arr) {
+    totalAmount += item;
   }
   tfoot.innerHTML = `
     <tr class="">
@@ -77,30 +78,8 @@ document.addEventListener("DOMContentLoaded", function () {
       <td></td>
       <td></td>
       <td></td>
-        <td class="text-danger">Tổng tiền: <span class="font-weight-bold">${sum} đ</span></td>
+        <td class="text-danger">Tổng tiền: <span class="font-weight-bold">${totalAmount} đ</span></td>
         <td class=""><a href="/order/checkout" class="btn btn-link btn-sm btn-rounded bg-danger text-white ">Thanh Toán</a></td>
     </tr>
   `;
 });
-
-// // Function to get the value of a cookie by its name
-// function getCookie(cookieName) {
-//   const cookies = document.cookie.split("; ");
-//   for (let i = 0; i < cookies.length; i++) {
-//     const cookie = cookies[i].split("=");
-//     const name = decodeURIComponent(cookie[0]);
-//     const value = decodeURIComponent(cookie[1]);
-//     if (name === cookieName) {
-//       return value;
-//     }
-//   }
-//   return null;
-// }
-// // Usage
-// const orderCookie = getCookie("order");
-// if (orderCookie) {
-//   const order = JSON.parse(orderCookie);
-//   order.forEach((element) => {
-//     console.log(element);
-//   });
-// }

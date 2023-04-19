@@ -44,5 +44,8 @@ class SiteController {
   introduce(req, res) {
     return res.render("introduce");
   }
+  contact(req, res) {
+    return res.render("contact");
+  }
 }
 module.exports = new SiteController();

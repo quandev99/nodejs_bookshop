@@ -1,0 +1,117 @@
+
+  <h3>Danh sách đơn hàng</h3>
+  <table class="table align-middle mb-0 bg-white table-hover">
+    <thead class="bg-light">
+      <tr>
+        <th>#</th>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Total</th>
+        <th>TotalQuantity</th>
+        <th>Trạng Thái</th>
+        <th>Ngày đặt hàng</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each getOrders}}
+        <tr>
+          <td>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="userIds[]"
+                value="{{this._id}}"
+              />
+            </div>
+            <th scope="row">{{sum @index 1}}</th>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <img
+                src="{{this.avatar}}"
+                alt=""
+                style="width: 45px; height: 45px"
+                class="rounded-circle"
+              />
+              <div class="ms-3 ml-2">
+                <p class="fw-bold mb-1">{{this.userName}}</p>
+                <p class="text-muted mb-0">{{this.email}}</p>
+              </div>
+            </div>
+          </td>
+          
+          <td>
+            <span
+              class="text-danger font-weight-bold d-inline"
+            >{{formatNumber this.totalAmount}} đ</span>
+          </td>
+          <td class="">{{this.totalQuantity}}</td>
+          <td class="">{{this.status}}</td>
+          <td class="createdAt" style="display: block;width:100px; font-size:15px">{{this.createdAt}}</td>
+          <td>
+            <a
+              href="/order/{{this._id}}/getOrderDetail"
+              class="btn btn-link btn-sm btn-rounded bg-primary text-white"
+            ><i class="fa-solid fa-eye"></i></a>
+            <a
+              href="/order/{{this._id}}/deleteOrder"
+              data-id="{{this._id}}"
+              class="btn btn-link btn-sm btn-rounded bg-danger text-white"
+              data-toggle="modal"
+              data-target="#delete-order-modal"
+            ><i class="far fa-trash-alt"></i></a>
+          </td>
+        </tr>
+      {{else}}
+        <tr>
+          <td colspan="5" class="text-center">Danh sách đơn hàng chưa có !
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>  
+  </table>
+
+{{! Confirm delete order }}
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="delete-order-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cảnh báo</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa sản phẩm này không?
+      </div>
+      <div class="modal-footer">
+        <button id="btn-delete-order" type="button" class="btn btn-danger">Xóa bỏ</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</form>
+
+</script>
