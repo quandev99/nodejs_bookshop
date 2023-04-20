@@ -108,7 +108,7 @@ class AuthController {
         const { password, ...others } = user._doc;
         return res.status(200).json({
           success: true,
-          message: "Đăng nhập thành công",
+          message: "Đăng nhập thành công!",
           user: { ...others },
           accessToken,
         });
