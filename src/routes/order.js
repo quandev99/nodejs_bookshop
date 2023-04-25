@@ -6,9 +6,9 @@ const {
   verifyToken,
   verifyTokenAndAdminAuth,
 } = require("../app/middlewares/auth.js");
-router.post("/addCart", verifyToken, ordersController.addCart);
-router.get("/checkout", verifyToken, ordersController.checkout);
-router.get("/:id/getOrderDetail", verifyToken, ordersController.getOrderDetail);
-router.delete("/:id/deleteOrder", verifyToken, ordersController.deleteOrder);
-router.get("/", verifyToken, ordersController.Cart);
+router.post("/addCart", ordersController.addCart);
+router.get("/checkout", ordersController.checkout);
+router.get("/:id/getOrderDetail", ordersController.getOrderDetail);
+router.delete("/:id/deleteOrder", ordersController.deleteOrder);
+router.get("/", ordersController.Cart);
 module.exports = router;

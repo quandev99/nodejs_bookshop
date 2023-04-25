@@ -46,17 +46,22 @@ document.addEventListener("DOMContentLoaded", function () {
     tableBody.appendChild(row);
   }
   const tagSumPrice = document.querySelector(".sum-price");
-  let arr = [];
-  for (let i = 0; i < orderList.length; i++) {
-    const element = orderList[i];
-    const sum = element.quantity * element.price;
-    arr.push(sum);
-  }
-  let sum = 0;
-  for (const item of arr) {
-    sum += item;
-  }
-  tagSumPrice.innerHTML = `<td class="text-danger mr-2">Tổng số tiền: <span class="font-weight-bold text-danger">${sum}</span> đ</td>`;
+  // let arr = [];
+  // for (let i = 0; i < orderList.length; i++) {
+  //   const element = orderList[i];
+  //   const sum = element.quantity * element.price;
+  //   arr.push(sum);
+  // }
+  // let sum = 0;
+  // for (const item of arr) {
+  //   sum += item;
+  // }
+  let totalAmount = 0;
+  orderList?.forEach((event) => {
+    const subtotal = parseInt(event.price) * event.quantity;
+    totalAmount += subtotal;
+  });
+  tagSumPrice.innerHTML = `<td class="text-danger mr-2">Tổng số tiền: <span class="font-weight-bold text-danger">${totalAmount}</span> đ</td>`;
 
   // Điền thông tin và checkout vào đơn hàng
   const button = document.querySelector("#button");
@@ -79,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
       address: address,
       phone: phone,
       products: orderList,
-      totalAmount: sum,
+      totalAmount: totalAmount,
     });
     try {
       if (data?.data?.success == true) {

@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     row.innerHTML = `   
           <td>
             <span >${i + 1}</span>
+            <p class="d-none orderId">${order.id}</p>
           </td>
           <td >
             <div class="d-flex align-items-center">
@@ -51,27 +52,58 @@ document.addEventListener("DOMContentLoaded", function () {
           }đ</p></td>
           <td class="text-center">           
             <a
-              href="#"
+              href="/order"
               data-id="${order.id}"
-              class="btn btn-link btn-sm btn-rounded bg-danger text-white delete-order"
+              class="btn btn-link btn-sm btn-rounded bg-danger text-white delete-order remove_order"
               data-toggle="modal"
               data-target="#delete-cart-modal"
-            ><i class="far fa-trash-alt"></i></a>
+            >
+            <i class="far fa-trash-alt "></i>
+            </a>
           </td>        
     `;
     tableBody.appendChild(row);
   }
+  let btn = document.querySelectorAll(".remove_order");
+  btn?.forEach((item) => {
+    item.addEventListener("click", (element) => {
+      element.preventDefault();
+      console.log("quan");
+      orderList.forEach((e) => {
+        const idCart =
+          element.target.parentNode.parentNode.querySelector(
+            ".orderId"
+          ).textContent;
+        const idOrder = item.getAttribute("data-id");
+        console.log("Id lay cach 1: " + idOrder);
+        console.log("Id lay cach 2: " + idCart);
+        if (idCart == e.id) {
+          orderList.splice(orderList.indexOf(e), 1);
+          document.cookie = `order=${JSON.stringify(
+            orderList
+          )}; expires=${new Date(Date.now() + 86400e3).toUTCString()}; path=/`;
+          this.location.href = "/order";
+        }
+      });
+    });
+  });
+
   const tfoot = document.getElementsByTagName("tfoot")[0];
-  let arr = [];
-  for (let i = 0; i < orderList.length; i++) {
-    const element = orderList[i];
-    const sum = element.quantity * element.price;
-    arr.push(sum);
-  }
+  // let arr = [];
+  // for (let i = 0; i < orderList.length; i++) {
+  //   const element = orderList[i];
+  //   const sum = element.quantity * element.price;
+  //   arr.push(sum);
+  // }
+  // let totalAmount = 0;
+  // for (const item of arr) {
+  //   totalAmount += item;
+  // }
   let totalAmount = 0;
-  for (const item of arr) {
-    totalAmount += item;
-  }
+  orderList?.forEach((event) => {
+    const subtotal = parseInt(event.price) * event.quantity;
+    totalAmount += subtotal;
+  });
   tfoot.innerHTML = `
     <tr class="">
     <td></td>
@@ -79,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
       <td></td>
       <td></td>
         <td class="text-danger">Tổng tiền: <span class="font-weight-bold">${totalAmount} đ</span></td>
-        <td class=""><a href="/order/checkout" class="btn btn-link btn-sm btn-rounded bg-danger text-white ">Thanh Toán</a></td>
+        <td class=""><a href="/order/checkout" class="btn btn-link btn-sm btn-rounded bg-success text-white">Thanh Toán</a></td>
     </tr>
   `;
 });
