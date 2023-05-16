@@ -70,12 +70,12 @@ document.addEventListener("DOMContentLoaded", function () {
       element.preventDefault();
       console.log("quan");
       orderList.forEach((e) => {
+        // const idOrder = item.getAttribute("data-id");
+        // console.log("Id lay cach 1: " + idOrder);
         const idCart =
           element.target.parentNode.parentNode.querySelector(
             ".orderId"
           ).textContent;
-        const idOrder = item.getAttribute("data-id");
-        console.log("Id lay cach 1: " + idOrder);
         console.log("Id lay cach 2: " + idCart);
         if (idCart == e.id) {
           orderList.splice(orderList.indexOf(e), 1);
