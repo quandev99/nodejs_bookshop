@@ -11,9 +11,8 @@ loginForm.addEventListener("submit", async (event) => {
     body: JSON.stringify({ password: password, userName: username }),
   });
   const data = await response.json();
-  if (data.user) {
+  if (data?.user) {
     localStorage.setItem("user", JSON.stringify(data));
-    console.log(data.user);
     alert(data.message);
     location.href = "/";
     return;

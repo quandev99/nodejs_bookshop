@@ -50,23 +50,29 @@ const admin = document.getElementById("admin");
 admin.addEventListener("click", async (e) => {
   e.preventDefault();
   const data = JSON.parse(localStorage.getItem("user"));
-  const accessToken = data?.accessToken;
-
-  if (!accessToken || !data?.user.admin) {
-    alert("Bạn không có quyền vào trang này!.");
-    // location.href = "/";
-    return;
+  if(!data) {
+     alert("Bạn không có quyền vào trang này!.");
+     return;
   }
+  const accessToken = data?.accessToken;
+  const isAdmin = data?.user.admin;
+  console.log("accessToken", data?.user?.admin);
+
+ 
   // Hàm kiểm tra token và vai trò người dùng
   try {
+     if (!accessToken || isAdmin == false) {
+       alert("Bạn không có quyền vào trang này!.");
+       return;
+     }
     const response = await fetch("http://localhost:1999/admin", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-
-    location.href = "/admin";
+    console.log("response", response);
+    if (response) location.href = "/admin";
     return;
   } catch (error) {
     console.error(error);

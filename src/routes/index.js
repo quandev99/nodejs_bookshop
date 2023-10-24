@@ -16,7 +16,7 @@ function route(app) {
   app.use("/admin/me", meRoute);
   app.use("/admin/products", productsRoute);
   app.use("/admin/categories", categoriesRoute);
-  app.use("/admin", adminRoute);
+  app.use("/admin",verifyTokenAndAdminAuth, adminRoute);
   app.use("/categoryProduct", categoryProductRoute);
   app.use("/comment", commentRoute);
   app.use("/order", orderRoute);
